@@ -1,0 +1,80 @@
+.menu_bar {
+  position: absolute;
+  width: 200px;
+  height: 810px;
+  left: 0px;
+  top: 0px;
+  background: #ffffff !important;
+  box-shadow: 0px 4px 6px rgba(219, 219, 219, 0.5);
+  border-radius: 16px 0px 0px 16px;
+}
+.logo {
+  position: relative;
+  width: 80px;
+  height: 64px;
+  left: 60px;
+  top: 32px;
+}
+.menu_bar_1 {
+  position: absolute;
+  width: 200px;
+  height: 48px;
+  left: 0px;
+  top: 150px;
+  border-radius: 8px;
+}
+
+.menu_bar_1 a {
+  position: relative;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px 12px 12px 24px;
+  gap: 12px;
+  color: #7e7d88;
+  line-height: 24px;
+  
+}
+
+.menu_bar_1 :hover {
+  color: #ff7506;
+  cursor: pointer;
+  /* position: relative; */
+  background: #fff2e7;
+}
+
+.menu_bar_1 .active {
+  background-color: #ff7506;
+  /* gap: 8px; */
+   width: 200px;
+  /* height: 48px;  */
+  /* position: absolute; */
+}
+
+.menu_bar_2 {
+  position: absolute;
+  width: 200px;
+  height: 46px;
+  left: 0px;
+  top: 732px;
+}
+
+.menu_bar_2 a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
+  position: absolute;
+  width: 176px;
+  height: 48px;
+  left: 12px;
+  top: 0px;
+  color: #ff7506;
+  background: #fff2e7;
+  border-radius: 8px;
+}

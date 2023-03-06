@@ -1,0 +1,69 @@
+.right {
+  /* position: absolute; */
+  /* width: 1240px; */
+  height: 88px;
+  left: 200px;
+  top: 0px;
+}
+
+.crbar_1 {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  right: 260px;
+  top: 28px;
+
+  /* Orange/$-Orange-50 */
+
+  background: #fff2e7;
+  border-radius: 32px;
+}
+.icon_1 {
+  position: absolute;
+  width: 20px;
+  left: 6px;
+  top: 8px;
+
+  color: #ffac6a;
+}
+
+.crbar_2 {
+  position: absolute;
+  width: 172px;
+  height: 42px;
+  right: 64px;
+  top: 24px;
+}
+
+.ava {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  right: 132px;
+  top: 0px;
+  border-radius: 48px;
+}
+
+.crbar_2_text {
+  position: absolute;
+  width: 47px;
+  height: 18px;
+  right: 77px;
+  top: 0px;
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+
+  color: #7e7d88;
+}
+
+.crbar_2_text2 {
+  font-family: "Nunito";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: #535261;
+}
