@@ -54,9 +54,9 @@ export const Sidebar = () => {
       <img src="../Img/Logo.png" className="logo" alt=""></img>
       <Menu>
         <ul className="menu_bar_1">
-          {SidebarData.map((item) => {
+          {SidebarData.map((item, index) => {
             return (
-              <li>
+              <li key={index}>
                 <NavLink to={item.path}>
                   {item.icon}
                   <span>{item.title}</span>
@@ -66,9 +66,9 @@ export const Sidebar = () => {
           })}
         </ul>
         <ul className="menu_bar_2">
-          {LogoutData.map((item) => {
+          {LogoutData.map((item, index) => {
             return (
-              <li>
+              <li key={index}>
                 <NavLink to={item.path}>
                   {item.icon}
                   <span>{item.title}</span>

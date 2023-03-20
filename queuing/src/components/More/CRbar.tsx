@@ -22,6 +22,7 @@ const items: MenuProps["items"] = [
 
 export const CRbar = () => {
   return (
+
     <div className="right">
       <div className="crbar_1">
         <Dropdown menu={{ items }} trigger={["click"]}>
@@ -30,7 +31,7 @@ export const CRbar = () => {
       </div>
       <div className="crbar_2">
         <Link to="/infor">
-          <img src="Img/user.png" alt="" className="ava" />
+          <img src="../Img/user.png" alt="" className="ava" />
           <span className="crbar_2_text">
             Xin chào <span className="crbar_2_text2">Qa</span>
           </span>

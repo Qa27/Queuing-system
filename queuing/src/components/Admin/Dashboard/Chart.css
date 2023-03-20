@@ -1,0 +1,9 @@
+.chart {
+    width: 791px;
+    height: 474px;
+    margin-left: 64px;
+    margin-top: 16px;
+    filter: drop-shadow(2px 2px 15px rgba(70, 64, 67, 0.1));
+    background: #ffffff;
+    border-radius: 12px;
+  }

@@ -1,3 +1,12 @@
 body {
   font-family: "Poppins,sans-serif", "Nunito";
 }
+* {
+  font-family: "Nunito";
+  font-style: normal;
+}
+
+RBreadcrumb{
+  color: red;
+  background-color: red;
+}
