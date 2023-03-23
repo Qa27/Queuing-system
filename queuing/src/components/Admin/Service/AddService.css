@@ -1,0 +1,52 @@
+.D_col2 .ant-form-item-control-input {
+  width: 540px;
+}
+
+.desS#nest-messages_desS {
+  height: 144px;
+}
+
+.desS#nest-messages_desS:hover,
+.desS#nest-messages_desS:focus-within {
+  border: 1.5px solid #ffac6a !important;
+  box-shadow: none !important;
+}
+
+.S_box_title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #ff7506;
+}
+
+.autoS {
+  margin-top: 36px;
+}
+
+.numS,
+.numS2 {
+  position: absolute;
+  width: 80px;
+  height: 44px;
+  margin-left: 15px;
+  margin-top: -9px;
+  border-radius: 8px;
+}
+
+.numS2 .ant-input-number-input,
+.numS .ant-input-number-input {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #535261;
+  height: 44px;
+}
+
+.numS2:hover,
+.numS:hover {
+  border: 1.5px solid #ff7506 !important;
+}
+
+.numS2{
+    margin-left: 142px;
+}

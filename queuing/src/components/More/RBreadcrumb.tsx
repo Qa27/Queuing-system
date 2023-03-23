@@ -12,9 +12,7 @@ export const RBreadcrumb = () => {
       <div className="space">
         <Breadcrumb separator=">" className="breadcrumb">
           {pathnames.length > 0 ? (
-            <Breadcrumb.Item>
-            {/* <Link to="/"></Link> */}
-            </Breadcrumb.Item>
+            <Breadcrumb.Item>{/* <Link to="/"></Link> */}</Breadcrumb.Item>
           ) : (
             <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
           )}
@@ -22,12 +20,12 @@ export const RBreadcrumb = () => {
             const routeTo = `/${pathnames.slice(0, index + 1).join("/")}`;
             const isLast = index === pathnames.length - 1;
             return isLast ? (
-              <Breadcrumb.Item>
-                {capatilize(name)}
-              </Breadcrumb.Item>
+              <Breadcrumb.Item>{capatilize(name)}</Breadcrumb.Item>
             ) : (
               <Breadcrumb.Item>
-                <Link to={`${routeTo}`} className="RB_click">{capatilize(name)}</Link>
+                <Link to={`${routeTo}`} className="RB_click">
+                  {capatilize(name)}
+                </Link>
               </Breadcrumb.Item>
             );
           })}

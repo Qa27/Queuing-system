@@ -1,18 +1,27 @@
-/* eslint-disable no-template-curly-in-string */
+import React, { useState } from "react";
+import { collection, addDoc } from "firebase/firestore/lite";
+import { db } from "../../../Server/firebase";
 import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
 import { Button, Col, Form, Input, Layout, Row, Select } from "antd";
+import "./AddDevice.css";
+import { Sidebar } from "../../More/Sidebar";
+import { RBreadcrumb } from "../../More/RBreadcrumb";
 import { Content } from "antd/es/layout/layout";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CRbar } from "../../More/CRbar";
-import { RBreadcrumb } from "../../More/RBreadcrumb";
-import { Sidebar } from "../../More/Sidebar";
-import "./AddDevice.css";
-import { DeviceType, DType } from "./DeviceType";
 
 const { Option } = Select;
+
+const OPTIONS = [
+  "Khám tim mạch",
+  "Khám sản phụ khoa",
+  "Khám răng hàm mặt",
+  "Khám tai mũi họng",
+  "Khám hô hấp",
+  "Khám tổng quát",
+];
 
 const StartSVG = () => (
   <svg
@@ -42,69 +51,34 @@ const onFinish = (values: any) => {
   console.log(values);
 };
 
-const validateMessages = {
-  required: "${label} cần được nhập!",
-  // types: {
-  //   email: "${label} is not a valid email!",
-  //   number: "${label} is not a valid number!",
-  // },
-};
-
 export const AddDevice = () => {
   const navigate = useNavigate();
-
   const [idDevice, setIdDevice] = useState("");
   const [nameDevice, setNameDevice] = useState("");
   const [ipDevice, setIPDevice] = useState("");
   const [typeDevice, setTypeDevice] = useState("");
   const [userDevice, setUserDevice] = useState("");
   const [passDevice, setPassDevice] = useState("");
-  const [tagsDevice, setTagsDevice] = useState("");
+  const [serviceDevice, setserviceDevice] = useState<string[]>([]);
+  const filteredOptions = OPTIONS.filter((o) => !serviceDevice.includes(o));
 
-  const onIdDevice = (e: any) => {
-    setIdDevice(e.target.value);
+  const handleChange = (value: any) => {
+    setserviceDevice(value);
   };
 
-  const onNameDevice = (e: any) => {
-    setNameDevice(e.target.value);
-  };
-
-  const onIPDevice = (e: any) => {
-    setIPDevice(e.target.value);
-  };
-
-  const onTypeDevice = (e: any) => {
-    setTypeDevice(e.target.value);
-  };
-
-  const onUserDevice = (e: any) => {
-    setUserDevice(e.target.value);
-  };
-
-  const onPassDevice = (e: any) => {
-    setPassDevice(e.target.value);
-  };
-
-  const onTagsDevice = (e: any) => {
-    setTagsDevice(e.target.value);
-  };
-
-  const onSubmitBtn = (e: any) => {
-    e.preventDefault();
-    const data: DType = {
-      id: new Date().toJSON().toString(),
-      iddevice: idDevice,
+  const onSubmitBtn = async () => {
+    await addDoc(collection(db, "device"), {
+      idD: idDevice,
       name: nameDevice,
-      Ip: ipDevice,
+      ip: ipDevice,
       type: typeDevice,
       username: userDevice,
       password: passDevice,
-      tag: tagsDevice,
-    };
-
-    DeviceType.push(data);
-    navigate("/device");
+      service: serviceDevice,
+    });
+    navigate("/device/list_device");
   };
+
   return (
     <div>
       <Layout>
@@ -114,143 +88,129 @@ export const AddDevice = () => {
           <span className="AD_title">Quản lý thiết bị</span>
           <div className="AD_box">
             <span className="AD_box_title">Thông tin thiết bị</span>
-            <Row>
-              <Col span={12}>
-                <Form
-                  className="AD_form"
-                  {...layout}
-                  name="nest-messages"
-                  onFinish={onFinish}
-                  style={{ maxWidth: 600 }}
-                  validateMessages={validateMessages}
-                >
-                  <Form.Item
-                    name={["id"]}
-                    label="Mã thiết bị"
-                    rules={[{ required: true }]}
-                  >
+            <Form
+              className="AD_form"
+              {...layout}
+              name="nest-messages"
+              onFinish={onFinish}
+              style={{ maxWidth: 600 }}
+            >
+              <Row>
+                <Col className="D_col1" span={12}>
+                  <Form.Item name={["id"]} label="Mã thiết bị">
                     <Input
-                      onChange={onIdDevice}
+                      value={idDevice}
+                      onChange={(e: any) => {
+                        setIdDevice(e.target.value);
+                      }}
                       placeholder="Nhập mã thiết bị"
                     />
                   </Form.Item>
-                  <Form.Item
-                    name={["name"]}
-                    label="Tên thiết bị"
-                    rules={[{ required: true }]}
-                  >
+                  <Form.Item name={["name"]} label="Tên thiết bị">
                     <Input
-                      onChange={onNameDevice}
+                      value={nameDevice}
+                      onChange={(e: any) => {
+                        setNameDevice(e.target.value);
+                      }}
                       placeholder="Nhập tên thiết bị"
                     />
                   </Form.Item>
-                  <Form.Item
-                    name={["IP"]}
-                    label="Địa chỉ IP"
-                    rules={[{ required: true }]}
-                  >
+                  <Form.Item name={["IP"]} label="Địa chỉ IP">
                     <Input
-                      onChange={onIPDevice}
+                      value={ipDevice}
+                      onChange={(e: any) => {
+                        setIPDevice(e.target.value);
+                      }}
                       placeholder="Nhập địa chỉ IP"
                     />
                   </Form.Item>
-                </Form>
-              </Col>
-              <Col span={12}>
-                <Form
-                  className="AD_form"
-                  {...layout}
-                  name="nest-messages"
-                  onFinish={onFinish}
-                  style={{ maxWidth: 600 }}
-                  validateMessages={validateMessages}
-                >
-                  <Form.Item
-                    name={["type"]}
-                    label="Loại thiết bị"
-                    rules={[{ required: true }]}
-                  >
+                </Col>
+                <Col className="D_col2" span={12}>
+                  <Form.Item name={["type"]} label="Loại thiết bị">
                     <Select
-                      onChange={onTypeDevice}
+                      value={typeDevice}
+                      onChange={(value: string) => {
+                        setTypeDevice(value);
+                      }}
                       className="DD_device"
                       placeholder="Chọn loại thiết bị"
                       allowClear
                     >
-                      <Option value="device1">Kiosk</Option>
-                      <Option value="device2">Display counter</Option>
+                      <Option value="Kiosk">Kiosk</Option>
+                      <Option value="Display counter">Display counter</Option>
                     </Select>
                   </Form.Item>
-                  <Form.Item
-                    name={["username"]}
-                    label="Tên đăng nhập"
-                    rules={[{ required: true }]}
-                  >
+                  <Form.Item name={["username"]} label="Tên đăng nhập">
                     <Input
-                      onChange={onUserDevice}
+                      value={userDevice}
+                      onChange={(e: any) => {
+                        setUserDevice(e.target.value);
+                      }}
                       placeholder="Nhập tài khoản"
                     />
                   </Form.Item>
-                  <Form.Item
-                    name={["password"]}
-                    label="Mật khẩu"
-                    rules={[{ required: true }]}
-                  >
+                  <Form.Item name={["password"]} label="Mật khẩu">
                     <Input
-                      onChange={onPassDevice}
+                      value={passDevice}
+                      onChange={(e: any) => {
+                        setPassDevice(e.target.value);
+                      }}
                       placeholder="Nhập mật khẩu"
                     />
                   </Form.Item>
-                </Form>
-              </Col>
-              <Form
-                id="AD_form"
-                className="AD_form"
-                {...layout}
-                name="nest-messages"
-                onFinish={onFinish}
-                style={{ maxWidth: 600 }}
-                validateMessages={validateMessages}
+                </Col>
+              </Row>
+              <Form.Item
+                className="AD_form_center"
+                name={["tag"]}
+                label="Dịch vụ thiết bị"
               >
-                <Form.Item
-                  className="AD_form_center"
-                  name={["tag"]}
-                  label="Dịch vụ thiết bị"
-                  rules={[{ required: true }]}
+                <Select
+                  mode="multiple"
+                  placeholder="Nhập dịch vụ thiết bị"
+                  value={serviceDevice}
+                  onChange={handleChange}
+                  options={filteredOptions.map((item) => ({
+                    value: item,
+                    label: item,
+                  }))}
+                />
+                {/* <Input
+                  value={serviceDevice}
+                  onChange={(e: any) => {
+                    setserviceDevice(e.target.value);
+                  }}
+                  placeholder="Nhập dịch vụ thiết bị"
+                /> */}
+              </Form.Item>
+              <div className="AD_note">
+                <StartIcon />
+                <span className="AD_note_text">
+                  Là trường thông tin bắt buộc
+                </span>
+              </div>
+              <Form.Item className="D_bottom">
+                <Button
+                  className="D_back"
+                  type="primary"
+                  onClick={() => navigate(-1)}
                 >
-                  <Input
-                    onChange={onTagsDevice}
-                    placeholder="Nhập dịch vụ thiết bị"
-                  />
-                </Form.Item>
-                <div className="AD_note">
-                  <StartIcon />
-                  <span className="AD_note_text">
-                    Là trường thông tin bắt buộc
-                  </span>
-                </div>
-              </Form>
-            </Row>
+                  Hủy bỏ
+                </Button>
+                <Button
+                  onClick={onSubmitBtn}
+                  className="D_addD"
+                  type="primary"
+                  htmlType="submit"
+                >
+                  Thêm thiết bị
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
-          <Form.Item className="D_bottom">
-            <Button
-              className="D_back"
-              type="primary"
-              onClick={() => navigate(-1)}
-            >
-              Go Back
-            </Button>
-            <Button
-              onClick={onSubmitBtn}
-              className="D_addD"
-              type="primary"
-              htmlType="submit"
-            >
-              Thêm thiết bị
-            </Button>
-          </Form.Item>
         </Content>
+        <CRbar />
       </Layout>
-      <CRbar />
     </div>
   );
 };
