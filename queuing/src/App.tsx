@@ -10,6 +10,9 @@ import { ViewDevice } from "./components/Admin/Device/ViewDevice";
 import { Services } from "./components/Admin/Service/Services";
 import { AddService } from "./components/Admin/Service/AddService";
 import { ViewService } from "./components/Admin/Service/ViewService";
+import { Numbers } from "./components/Admin/Number/Numbers";
+import { ViewNumber } from "./components/Admin/Number/ViewNumber";
+import { AddNumber } from "./components/Admin/Number/AddNumber";
 
 function App() {
   return (
@@ -29,7 +32,13 @@ function App() {
           path="/service/list_service/add_service"
           element={<AddService />}
         />
-        <Route path="/service/list_service/view/:id" element={<ViewService />} />
+        <Route
+          path="/service/list_service/view/:id"
+          element={<ViewService />}
+        />
+        <Route path="/number/list_number" element={<Numbers />} />
+        <Route path="/number/list_number/add_number" element={<AddNumber />} />
+        <Route path="/number/list_number/view/:id" element={<ViewNumber />} />
       </Routes>
     </div>
   );

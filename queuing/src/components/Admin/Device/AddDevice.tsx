@@ -16,7 +16,7 @@ const { Option } = Select;
 
 const OPTIONS = [
   "Khám tim mạch",
-  "Khám sản phụ khoa",
+  "Khám sản - Phụ khoa",
   "Khám răng hàm mặt",
   "Khám tai mũi họng",
   "Khám hô hấp",

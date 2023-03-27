@@ -45,6 +45,11 @@
   color: #ff7506;
 }
 
+.V_add:hover,
+.V_add:focus-within {
+  border: 1.5px solid #ff7506 !important;
+}
+
 .V_table_title {
   position: absolute;
   margin-left: 24px;
@@ -83,4 +88,3 @@
   line-height: 24px;
   color: #535261;
 }
-

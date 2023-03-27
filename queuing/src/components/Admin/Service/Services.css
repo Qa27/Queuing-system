@@ -1,0 +1,14 @@
+.S_time {
+  position: absolute;
+  margin-top: 184px;
+  margin-left: 24px;
+}
+
+.S_time .ant-picker-range {
+  height: 44px;
+  width: 300px;
+}
+
+.S_time .ant-picker-range:hover {
+  border: 1.5px solid #ffac6a;
+}

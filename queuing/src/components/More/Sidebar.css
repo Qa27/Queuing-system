@@ -74,3 +74,11 @@
   background: #fff2e7;
   border-radius: 8px;
 }
+
+.SB_item:hover path {
+  stroke: #ff7506;
+}
+
+.SB_item .active path {
+  stroke: white;
+}

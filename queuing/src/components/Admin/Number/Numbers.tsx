@@ -1,38 +1,38 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
 import { Badge, Input, Layout, Pagination, Select, Table } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore/lite";
-import React, { useEffect, useState } from "react";
 import { DatePicker } from "antd";
+import { Dayjs } from "dayjs";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  Timestamp,
+} from "firebase/firestore/lite";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../../Server/firebase";
 import { CRbar } from "../../More/CRbar";
 import { RBreadcrumb } from "../../More/RBreadcrumb";
 import { Sidebar } from "../../More/Sidebar";
-import "./Services.css";
-import { Dayjs } from "dayjs";
+import "./Number.css";
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 type RangeValue = [Dayjs | null, Dayjs | null] | null;
 
-interface Service {
+interface Number {
   id: string;
-  idS: string;
-  nameS: string;
-  descriptionS: string;
-  autoS: boolean;
-  prefixS: boolean;
-  surfixS: boolean;
-  auNumS: number;
-  aumax: number;
-  preNumS: number;
-  surNumS: number;
-  resetS: boolean;
-  stt: boolean;
+  numN: number;
+  nameUser: string;
+  nameN: string;
+  timeN: Timestamp;
+  expiryN: Timestamp;
+  sttN: string;
+  sourceN: string;
 }
 
 const AddSVG = () => (
@@ -46,31 +46,6 @@ const AddSVG = () => (
     <path
       d="M18.8884 2.33301H9.11171C4.86504 2.33301 2.33337 4.86467 2.33337 9.11134V18.8763C2.33337 23.1347 4.86504 25.6663 9.11171 25.6663H18.8767C23.1234 25.6663 25.655 23.1347 25.655 18.888V9.11134C25.6667 4.86467 23.135 2.33301 18.8884 2.33301ZM18.6667 14.8747H14.875V18.6663C14.875 19.1447 14.4784 19.5413 14 19.5413C13.5217 19.5413 13.125 19.1447 13.125 18.6663V14.8747H9.33337C8.85504 14.8747 8.45837 14.478 8.45837 13.9997C8.45837 13.5213 8.85504 13.1247 9.33337 13.1247H13.125V9.33301C13.125 8.85467 13.5217 8.45801 14 8.45801C14.4784 8.45801 14.875 8.85467 14.875 9.33301V13.1247H18.6667C19.145 13.1247 19.5417 13.5213 19.5417 13.9997C19.5417 14.478 19.145 14.8747 18.6667 14.8747Z"
       fill="#FF9138"
-    />
-  </svg>
-);
-
-const SearchSVG = () => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
-      stroke="#FF7506"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-    <path
-      d="M17.5 17.5L13.875 13.875"
-      stroke="#FF7506"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
     />
   </svg>
 );
@@ -126,6 +101,31 @@ const CalendarSVG = () => (
   </svg>
 );
 
+const SearchSVG = () => (
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9.16667 15.8333C12.8486 15.8333 15.8333 12.8486 15.8333 9.16667C15.8333 5.48477 12.8486 2.5 9.16667 2.5C5.48477 2.5 2.5 5.48477 2.5 9.16667C2.5 12.8486 5.48477 15.8333 9.16667 15.8333Z"
+      stroke="#FF7506"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M17.5 17.5L13.875 13.875"
+      stroke="#FF7506"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+);
+
 const DatePickerSVG = () => (
   <svg
     width="12"
@@ -145,34 +145,48 @@ const AddIcon = (props: Partial<CustomIconComponentProps>) => (
   <Icon component={AddSVG} {...props} />
 );
 
-const SearchIcon = (props: Partial<CustomIconComponentProps>) => (
-  <Icon component={SearchSVG} {...props} />
-);
-
 const CalendarIcon = (props: Partial<CustomIconComponentProps>) => (
   <Icon component={CalendarSVG} {...props} />
+);
+
+const SearchIcon = (props: Partial<CustomIconComponentProps>) => (
+  <Icon component={SearchSVG} {...props} />
 );
 
 const DatePickerIcon = (props: Partial<CustomIconComponentProps>) => (
   <Icon component={DatePickerSVG} {...props} />
 );
 
-export const Services = () => {
-  const [service, setService] = useState<Service[]>([]);
-  const [openSTT, setOpenSTT] = useState<boolean[]>([]);
-  const [sttValue, setSttValue] = useState<string>("");
-  const [dates, setDates] = useState<RangeValue>(null);
+export const Numbers = () => {
+  const [number, setNumber] = useState<Number[]>([]);
+  const [openNameN, setOpenNameN] = useState<boolean[]>([]);
+  const [nameNValue, setnameNValue] = useState<string>("");
+  const [openSttN, setOpenSttN] = useState<boolean[]>([]);
+  const [sttNValue, setSttNValue] = useState<string>("");
+  const [openSourceN, setOpenSourceN] = useState<boolean[]>([]);
+  const [sourceNValue, setSourceNValue] = useState<string>("");
+  const [dates, setDates] = useState<[Dayjs | null, Dayjs | null] | null>(null);
   const [value, setValue] = useState<RangeValue>(null);
   const [searchText, setSearchText] = useState("");
 
   async function getCities(db: any) {
-    const citiesCol = collection(db, "service");
+    const citiesCol = collection(db, "number");
     const citySnapshot = await getDocs(citiesCol);
     const cityList = citySnapshot.docs.map((doc) => ({
-      ...(doc.data() as Service),
+      ...(doc.data() as Number),
       id: doc.id,
+      timeN: doc
+        .data()
+        .timeN.toDate()
+        .toLocaleString("vi-VN", { hour12: false })
+        .replace(/:\d{2}\s/, " - "),
+      expiryN: doc
+        .data()
+        .expiryN.toDate()
+        .toLocaleString("vi-VN", { hour12: false })
+        .replace(/:\d{2}\s/, " - "),
     }));
-    setService(cityList);
+    setNumber(cityList);
   }
 
   useEffect(() => {
@@ -180,52 +194,64 @@ export const Services = () => {
   }, []);
 
   const onDelete = async (id: any) => {
-    await deleteDoc(doc(db, "service", id));
+    await deleteDoc(doc(db, "number", id));
     window.location.reload();
   };
 
   const columns = [
     {
-      title: "Mã dịch vụ",
-      dataIndex: "idS",
-      key: "idS",
+      title: "STT",
+      dataIndex: "numN",
+      key: "numN",
+    },
+    {
+      title: "Tên khách hàng",
+      dataIndex: "nameUser",
+      key: "nameUser",
     },
     {
       title: "Tên dịch vụ",
-      dataIndex: "nameS",
-      key: "nameS",
+      dataIndex: "nameN",
+      key: "nameN",
     },
     {
-      title: "Mô tả dịch vụ",
-      dataIndex: "descriptionS",
-      key: "descriptionS",
+      title: "Thời gian cấp",
+      dataIndex: "timeN",
+      key: "timeN",
     },
-
     {
-      title: "Trạng thái hoạt động",
-      dataIndex: "stt",
-      key: "stt",
-      render: (stt: boolean) => (
+      title: "Hạn sử dụng",
+      dataIndex: "expiryN",
+      key: "expiryN",
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "sttN",
+      key: "sttN",
+      render: (sttN: string) => (
         <Badge
-          status={stt ? "success" : "error"}
-          text={stt ? "Hoạt động" : "Ngưng hoạt động"}
+          status={
+            sttN === "Đang chờ"
+              ? "processing"
+              : sttN === "Đã sử dụng"
+              ? "default"
+              : "error"
+          }
+          text={sttN}
         />
       ),
     },
     {
-      title: " ",
-      dataIndex: "id",
-      key: "id",
-      render: (id: any) => (
-        <Link to={`/service/list_service/view/${id}`}>Chi tiết</Link>
-      ),
+      title: "Nguồn cấp",
+      dataIndex: "sourceN",
+      key: "sourceN",
     },
     {
       title: " ",
       dataIndex: "id",
       key: "id",
       render: (id: any) => (
-        <Link to={`/service/list_service/edit_service/${id}`}> Cập nhật </Link>
+        <Link to={`/number/list_number/view/${id}`}>Chi tiết</Link>
       ),
     },
     {
@@ -270,19 +296,26 @@ export const Services = () => {
     </svg>
   );
 
-  const handleSttChange = (value: string) => {
-    setSttValue(value);
+  const handleNameNChange = (value: string) => {
+    setnameNValue(value);
+  };
+  const handleSttNChange = (value: string) => {
+    setSttNValue(value);
+  };
+  const handleSourceNChange = (value: string) => {
+    setSourceNValue(value);
   };
 
-  const filteredData = service.filter((item) => {
-    if (sttValue === "") return true;
-    if (item.stt === undefined) return false;
-    return item.stt.toString() === sttValue;
+  const filteredData = number.filter((item) => {
+    const nameNCondition =
+      nameNValue === "" || (item.nameN && item.nameN.toString() === nameNValue);
+    const sttNCondition =
+      sttNValue === "" || (item.sttN && item.sttN.toString() === sttNValue);
+    const sourceNCondition =
+      sourceNValue === "" ||
+      (item.sourceN && item.sourceN.toString() === sourceNValue);
+    return nameNCondition && sttNCondition && sourceNCondition;
   });
-
-  const searchData: Service[] = filteredData.filter((item) =>
-    item.nameS.toLowerCase().includes(searchText.toLowerCase())
-  );
 
   const disabledDate = (current: Dayjs) => {
     if (!dates) {
@@ -301,6 +334,10 @@ export const Services = () => {
     }
   };
 
+  const searchData: Number[] = filteredData.filter((item) =>
+    item.nameUser.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   const [current, setCurrent] = useState(1);
   const pageSize = 5;
 
@@ -312,45 +349,87 @@ export const Services = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="title">Quản lý dịch vụ</span>
+          <span className="title">Quản lý cấp số</span>
           <div className="D_box">
-            <span className="D_box_title">Trạng thái hoạt động</span>
-            <div className="D_dropdown">
+            <span className="D_box_title">Tên dịch vụ</span>
+            <div className="N_dropdown">
               <Select
-                suffixIcon={createCustomSuffixIcon(openSTT)}
+                suffixIcon={createCustomSuffixIcon(openNameN)}
                 defaultValue=""
-                onChange={handleSttChange}
-                onDropdownVisibleChange={(open) => setOpenSTT([open])}
+                onChange={handleNameNChange}
+                onDropdownVisibleChange={(openNameN) =>
+                  setOpenNameN([openNameN])
+                }
               >
                 <Option value="">Tất cả</Option>
-                <Option value="true">Hoạt động</Option>
-                <Option value="false">Ngưng hoạt động</Option>
+                <Option value="Khám tim mạch">Khám tim mạch</Option>
+                <Option value="Khám sản - Phụ khoa">Khám sản - Phụ khoa</Option>
+                <Option value="Khám răng hàm mặt">Khám răng hàm mặt</Option>
+                <Option value="Khám tai mũi họng">Khám tai mũi họng</Option>
+                <Option value="Khám hô hấp">Khám hô hấp</Option>
+                <Option value="Khám tổng quát">Khám tổng quát</Option>
               </Select>
             </div>
-            <div className="D_box2">
-              <span className="D_box_title">Chọn thời gian</span>
-              <div className="S_time">
-                <RangePicker
-                  value={dates || value}
-                  disabledDate={disabledDate}
-                  onCalendarChange={(val) => setDates(val)}
-                  onChange={(val) => setValue(val)}
-                  onOpenChange={onOpenChange}
-                  suffixIcon={<CalendarIcon />}
-                  separator={<DatePickerIcon />}
-                />
+            <div className="N_box2">
+              <span className="D_box_title">Tình trạng</span>
+              <div className="N_dropdown">
+                <Select
+                  suffixIcon={createCustomSuffixIcon(openSttN)}
+                  onDropdownVisibleChange={(openSttN) =>
+                    setOpenSttN([openSttN as boolean])
+                  }
+                  defaultValue=""
+                  onChange={handleSttNChange}
+                >
+                  <Option value="">Tất cả</Option>
+                  <Option value="Đang chờ">Đang chờ</Option>
+                  <Option value="Đã sử dụng">Đã sử dụng</Option>
+                  <Option value="Bỏ qua">Bỏ qua</Option>
+                </Select>
               </div>
             </div>
-            <div style={{ marginLeft: "900px" }} className="D_box3">
-              <span className="D_box_title">Từ khóa</span>
-              <div className="D_search">
-                <Input
-                  placeholder="Nhập từ khóa"
-                  onChange={(e: any) => {
-                    setSearchText(e.target.value);
-                  }}
-                  suffix={<SearchIcon />}
-                />
+            <div className="N_box3">
+              <span className="D_box_title">Nguồn cấp</span>
+              <div className="N_dropdown">
+                <Select
+                  suffixIcon={createCustomSuffixIcon(openSourceN)}
+                  onDropdownVisibleChange={(openSourceN) =>
+                    setOpenSourceN([openSourceN as boolean])
+                  }
+                  defaultValue=""
+                  onChange={handleSourceNChange}
+                >
+                  <Option value="">Tất cả</Option>
+                  <Option value="Kiosk">Kiosk</Option>
+                  <Option value="Hệ thống">Hệ thống</Option>
+                </Select>
+              </div>
+              <div className="N_box4">
+                <span className="D_box_title">Chọn thời gian</span>
+                <div className="S_time">
+                  <RangePicker
+                    placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
+                    value={dates || value}
+                    disabledDate={disabledDate}
+                    onCalendarChange={(val) => setDates(val)}
+                    onChange={(val) => setValue(val)}
+                    onOpenChange={onOpenChange}
+                    suffixIcon={<CalendarIcon />}
+                    separator={<DatePickerIcon />}
+                  />
+                </div>
+              </div>
+              <div className="N_box5">
+                <span className="D_box_title">Từ khóa</span>
+                <div className="D_search">
+                  <Input
+                    placeholder="Nhập từ khóa"
+                    onChange={(e: any) => {
+                      setSearchText(e.target.value);
+                    }}
+                    suffix={<SearchIcon />}
+                  />
+                </div>
               </div>
             </div>
             <div className="D_table">
@@ -359,15 +438,15 @@ export const Services = () => {
                 className="D_pagination"
                 current={current}
                 onChange={(page) => setCurrent(page)}
-                total={service.length}
+                total={number.length}
                 pageSize={pageSize}
               />
             </div>
           </div>
           <section className="section_content">
-            <Link to="/service/list_service/add_service" className="D_add">
+            <Link to="/number/list_number/add_number" className="D_add">
               <AddIcon />
-              <span>Thêm dịch vụ</span>
+              <span>Cấp số mới</span>
             </Link>
           </section>
         </Content>

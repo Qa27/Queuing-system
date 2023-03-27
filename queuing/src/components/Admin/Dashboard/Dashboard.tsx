@@ -15,7 +15,7 @@ export const Dashboard: React.FC = () => {
     <Layout>
       <Sidebar />
       <Layout>
-      <RBreadcrumb/>
+        <RBreadcrumb />
         <Content>
           <p className="C_Text2">Biểu đồ cấp số</p>
           <div className="T_box">
@@ -39,7 +39,9 @@ export const Dashboard: React.FC = () => {
                 </svg>
                 <img className="img" src="./Img/calendar.png" alt="" />
               </div>
-              <span style={{marginTop:"22px"}} className="box_text">Số thứ tự đã cấp</span>
+              <span style={{ marginTop: "22px" }} className="box_text">
+                Số thứ tự đã cấp
+              </span>
               <span className="box_text2">4.221</span>
               <div className="box_up">
                 <Statistic
@@ -169,7 +171,7 @@ export const Dashboard: React.FC = () => {
               </div>
             </Link>
           </div>
-          <Chart/>
+          <Chart />
         </Content>
       </Layout>
       <Rightbar />

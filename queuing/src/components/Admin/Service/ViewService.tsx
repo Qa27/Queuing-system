@@ -236,7 +236,9 @@ export const ViewService = () => {
                   />
                 </div>
               ) : null}
-              {resetS ? <span>Reset mỗi ngày</span> : null}
+              {resetS ? (
+                <span style={{ marginTop: "22px" }}>Reset mỗi ngày</span>
+              ) : null}
             </div>
           </div>
           <div className="VS_box_right"></div>
