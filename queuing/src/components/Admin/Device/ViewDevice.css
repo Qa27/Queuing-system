@@ -47,7 +47,8 @@
 
 .V_add:hover,
 .V_add:focus-within {
-  border: 1.5px solid #ff7506 !important;
+  border: #fff2e7 !important;
+  background-color: #fff2e7 !important ;
 }
 
 .V_table_title {

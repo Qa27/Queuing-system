@@ -1,28 +1,18 @@
 /* eslint-disable no-template-curly-in-string */
-import React, { useState } from "react";
-import { collection, addDoc } from "firebase/firestore/lite";
-import { db } from "../../../Server/firebase";
 import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
 import { Button, Col, Form, Input, Layout, message, Row, Select } from "antd";
-import "./AddDevice.css";
-import { Sidebar } from "../../More/Sidebar";
-import { RBreadcrumb } from "../../More/RBreadcrumb";
-import { useNavigate } from "react-router-dom";
-import { CRbar } from "../../More/CRbar";
 import { Content } from "antd/es/layout/layout";
+import { addDoc, collection } from "firebase/firestore/lite";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { db } from "../../../Server/firebase";
+import { RBreadcrumb } from "../../More/RBreadcrumb";
+import { Sidebar } from "../../More/Sidebar";
+import "./AddAcc.css";
 
 const { Option } = Select;
-
-const OPTIONS = [
-  "Khám tim mạch",
-  "Khám sản - Phụ khoa",
-  "Khám răng hàm mặt",
-  "Khám tai mũi họng",
-  "Khám hô hấp",
-  "Khám tổng quát",
-];
 
 const StartSVG = () => (
   <svg
@@ -48,42 +38,32 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-export const AddDevice = () => {
+export const AddAcc = () => {
   const navigate = useNavigate();
-  const [idDevice, setIdDevice] = useState("");
-  const [nameDevice, setNameDevice] = useState("");
-  const [ipDevice, setIPDevice] = useState("");
-  const [typeDevice, setTypeDevice] = useState("");
-  const [userDevice, setUserDevice] = useState("");
-  const [passDevice, setPassDevice] = useState("");
-  const [serviceDevice, setserviceDevice] = useState<string[]>([]);
-  const filteredOptions = OPTIONS.filter((o) => !serviceDevice.includes(o));
-  const [openSTT, setOpenSTT] = useState<boolean[]>([]);
-
-  const handleChange = (value: any) => {
-    setserviceDevice(value);
-  };
+  const [userA, setUserA] = useState("");
+  const [nameA, setNameA] = useState("");
+  const [numA, setNumA] = useState("");
+  const [emailA, setEmailA] = useState("");
+  const [roleA, setRoleA] = useState("");
+  const [sttA, setSttA] = useState("");
+  const [passA, setPassA] = useState("");
+  const [repassA, setRePassA] = useState("");
+  const [openRoleA, setOpenRoleA] = useState<boolean[]>([]);
+  const [openRoleB, setOpenRoleB] = useState<boolean[]>([]);
 
   const onSubmitBtn = async () => {
-    if (
-      idDevice &&
-      nameDevice &&
-      ipDevice &&
-      typeDevice &&
-      userDevice &&
-      passDevice &&
-      serviceDevice
-    ) {
-      await addDoc(collection(db, "device"), {
-        idD: idDevice,
-        name: nameDevice,
-        ip: ipDevice,
-        type: typeDevice,
-        username: userDevice,
-        password: passDevice,
-        service: serviceDevice,
+    if (nameA && numA && emailA && roleA && sttA && passA && repassA) {
+      await addDoc(collection(db, "acc"), {
+        userA: userA,
+        nameA: nameA,
+        numA: numA,
+        emailA: emailA,
+        roleA: roleA,
+        sttA: sttA,
+        passA: passA,
+        repassA: repassA,
       });
-      navigate("/device/list_device");
+      navigate("/setting/manage_account");
     } else {
       message.error("Vui lòng điền đầy đủ thông tin!");
     }
@@ -133,9 +113,9 @@ export const AddDevice = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="AD_title">Quản lý thiết bị</span>
+          <span className="AD_title">Quản lý tài khoản</span>
           <div className="AD_box">
-            <span className="AD_box_title">Thông tin thiết bị</span>
+            <span className="AD_box_title">Thông tin tài khoản</span>
             <Form
               className="AD_form"
               {...layout}
@@ -147,113 +127,150 @@ export const AddDevice = () => {
               <Row>
                 <Col className="D_col1" span={12}>
                   <Form.Item
-                    name={["id"]}
-                    label="Mã thiết bị"
+                    name={["nameA"]}
+                    label="Họ tên"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={idDevice}
+                      value={nameA}
                       onChange={(e: any) => {
-                        setIdDevice(e.target.value);
+                        setNameA(e.target.value);
                       }}
-                      placeholder="Nhập mã thiết bị"
+                      placeholder="Nhập họ tên"
                     />
                   </Form.Item>
                   <Form.Item
-                    name={["name"]}
-                    label="Tên thiết bị"
+                    name={["numA"]}
+                    label="Số điện thoại"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={nameDevice}
+                      value={numA}
                       onChange={(e: any) => {
-                        setNameDevice(e.target.value);
+                        setNumA(e.target.value);
                       }}
-                      placeholder="Nhập tên thiết bị"
+                      placeholder="Nhập số điện thoại"
                     />
                   </Form.Item>
                   <Form.Item
-                    name={["IP"]}
-                    label="Địa chỉ IP"
+                    name={["emailA"]}
+                    label="Email"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={ipDevice}
+                      value={emailA}
                       onChange={(e: any) => {
-                        setIPDevice(e.target.value);
+                        setEmailA(e.target.value);
                       }}
-                      placeholder="Nhập địa chỉ IP"
+                      placeholder="Nhập email"
                     />
                   </Form.Item>
-                </Col>
-                <Col className="D_col2" span={12}>
                   <Form.Item
-                    name={["type"]}
-                    label="Loại thiết bị"
+                    name={["roleA"]}
+                    label="Vai trò"
                     rules={[{ required: true }]}
                   >
                     <Select
-                      suffixIcon={createCustomSuffixIcon(openSTT)}
-                      onDropdownVisibleChange={(open: any) =>
-                        setOpenSTT([open])
-                      }
-                      value={typeDevice}
+                      value={roleA}
                       onChange={(value: string) => {
-                        setTypeDevice(value);
+                        setRoleA(value);
                       }}
                       className="DD_device"
-                      placeholder="Chọn loại thiết bị"
+                      placeholder="Chọn vai trò"
+                      onDropdownVisibleChange={(open: any) =>
+                        setOpenRoleA([open])
+                      }
+                      suffixIcon={createCustomSuffixIcon(openRoleA)}
                       allowClear
                     >
-                      <Option value="Kiosk">Kiosk</Option>
-                      <Option value="Display counter">Display counter</Option>
+                      <Option value="Kế toán">Kế toán</Option>
+                      <Option value="Quản lý">Quản lý</Option>
+                      <Option value="Admin">Admin</Option>
                     </Select>
                   </Form.Item>
+                </Col>
+                <Col className="D_col1" span={12}>
                   <Form.Item
-                    name={["username"]}
+                    name={["userA"]}
                     label="Tên đăng nhập"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={userDevice}
+                      value={userA}
                       onChange={(e: any) => {
-                        setUserDevice(e.target.value);
+                        setUserA(e.target.value);
                       }}
-                      placeholder="Nhập tài khoản"
+                      placeholder="Nhập tên đăng nhập"
                     />
                   </Form.Item>
                   <Form.Item
-                    name={["password"]}
+                    className="AA_pass"
+                    name={["passA"]}
                     label="Mật khẩu"
                     rules={[{ required: true }]}
                   >
-                    <Input
-                      value={passDevice}
+                    <Input.Password
+                      value={passA}
                       onChange={(e: any) => {
-                        setPassDevice(e.target.value);
+                        setPassA(e.target.value);
                       }}
-                      placeholder="Nhập mật khẩu"
+                      placeholder="●●●●●●●"
                     />
+                  </Form.Item>
+                  <Form.Item
+                    className="AA_pass"
+                    name={["repassA"]}
+                    label="Nhập lại mật khẩu"
+                    dependencies={["password"]}
+                    hasFeedback
+                    rules={[
+                      {
+                        required: true,
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue("passA") === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error("Mật khẩu không trùng khớp")
+                          );
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input.Password
+                      value={repassA}
+                      onChange={(e: any) => {
+                        setRePassA(e.target.value);
+                      }}
+                      placeholder="●●●●●●●"
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name={["sttA"]}
+                    label="Vai trò"
+                    rules={[{ required: true }]}
+                  >
+                    <Select
+                      value={sttA}
+                      onChange={(value: string) => {
+                        setSttA(value);
+                      }}
+                      className="DD_device"
+                      placeholder="Chọn vai trò"
+                      onDropdownVisibleChange={(open: any) =>
+                        setOpenRoleB([open])
+                      }
+                      suffixIcon={createCustomSuffixIcon(openRoleB)}
+                      allowClear
+                    >
+                      <Option value="Hoạt động">Hoạt động</Option>
+                      <Option value="Ngưng hoạt động">Ngưng hoạt động</Option>
+                    </Select>
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item
-                className="AD_form_center"
-                name={["tag"]}
-                label="Dịch vụ thiết bị"
-                rules={[{ required: true }]}
-              >
-                <Select
-                  mode="multiple"
-                  placeholder="Nhập dịch vụ thiết bị"
-                  value={serviceDevice}
-                  onChange={handleChange}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
-                />
-              </Form.Item>
               <div className="AD_note">
                 <StartIcon />
                 <span className="AD_note_text">
@@ -274,13 +291,12 @@ export const AddDevice = () => {
                   type="primary"
                   htmlType="submit"
                 >
-                  Thêm thiết bị
+                  Thêm
                 </Button>
               </Form.Item>
             </Form>
           </div>
         </Content>
-        <CRbar />
       </Layout>
     </div>
   );

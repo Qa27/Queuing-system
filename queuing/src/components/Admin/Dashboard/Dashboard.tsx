@@ -19,7 +19,7 @@ export const Dashboard: React.FC = () => {
         <Content>
           <p className="C_Text2">Biểu đồ cấp số</p>
           <div className="T_box">
-            <Link to="/numbers" className="box">
+            <Link to="/number/list_number" className="box">
               <div className="icon">
                 <svg
                   width="48"

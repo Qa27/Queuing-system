@@ -1,0 +1,51 @@
+.desR#nest-messages_descriptionR {
+  width: 540px;
+  height: 160px;
+}
+
+.desR#nest-messages_descriptionR:hover,
+.desR#nest-messages_descriptionR:focus-within {
+  border: 1.5px solid #ffac6a !important;
+  box-shadow: none !important;
+}
+
+.role_box {
+  position: absolute;
+  width: 560px;
+  height: 420px;
+  margin-top: -16px;
+  background: #fff2e7;
+  border-radius: 8px;
+}
+
+.AR_box_title {
+  position: absolute;
+  margin-left: 24px;
+  margin-top: 16px;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 30px;
+  color: #ff7506;
+}
+
+.AR_check {
+  margin-left: 24px;
+  margin-top: 58px;
+}
+
+.AR_check span {
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #535261;
+}
+
+.AR_check_group {
+  display: flex;
+  flex-direction: column;
+}
+
+.AR_check_group .ant-checkbox-wrapper {
+  margin: 0px;
+  margin-top: 11px;
+}

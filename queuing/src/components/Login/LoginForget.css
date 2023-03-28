@@ -1,0 +1,96 @@
+.forget_email {
+  position: absolute;
+  width: 400px;
+  height: 75px;
+  margin-left: 94px;
+  margin-top: 360px;
+}
+
+.forget_email input {
+  width: 400px;
+  height: 44px;
+  background: #ffffff;
+}
+
+.forget_email input:hover,
+.forget_email input:focus-within {
+  border: 1.5px solid #ffac6a !important;
+  box-shadow: none !important;
+}
+
+.forget_repass {
+  position: absolute;
+  margin-left: 209px;
+  margin-top: 320px;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 33px;
+  color: #282739;
+}
+
+.forget_cancel {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 162px;
+  height: 40px;
+  margin-left: 118px;
+  margin-top: 467px;
+  border: 1px solid #ff9138;
+  filter: drop-shadow(0px 0px 6px #e7e9f2);
+  border-radius: 8px;
+  background-color: transparent;
+  color: #ff9138;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.forget_cancel:hover {
+  background-color: transparent !important;
+  color: #ff9138 !important;
+}
+
+.forget_submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 162px;
+  height: 40px;
+  margin-left: 304px;
+  margin-top: 467px;
+  background: #ff9138;
+  box-shadow: 0px 0px 6px #e7e9f2;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.forget_submit:hover {
+  background-color: #ff9138 !important;
+}
+
+.forget_pass {
+  position: absolute;
+  width: 400px;
+  height: 75px;
+  margin-left: 94px;
+  margin-top: 360px;
+}
+
+.forget_pass input {
+  width: 360px;
+  height: 34px;
+}
+
+.forget_pass .ant-input-affix-wrapper:hover,
+.forget_pass .ant-input-affix-wrapper:focus-within {
+  border: 1.5px solid #ffac6a !important;
+  box-shadow: none !important;
+}

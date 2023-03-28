@@ -2,7 +2,6 @@ import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
 import { Col, Layout, Row } from "antd";
-import { Content } from "antd/es/layout/layout";
 import { doc, getDoc } from "firebase/firestore/lite";
 import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -11,6 +10,7 @@ import { RBreadcrumb } from "../../More/RBreadcrumb";
 import { Sidebar } from "../../More/Sidebar";
 import { db } from "../../../Server/firebase";
 import "./ViewDevice.css";
+import { Content } from "antd/es/layout/layout";
 
 interface Device {
   id: string;

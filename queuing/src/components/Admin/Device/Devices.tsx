@@ -1,17 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs } from "firebase/firestore/lite";
 import { db } from "../../../Server/firebase";
 import { Link } from "react-router-dom";
 import { Badge, Input, Layout, Pagination, Popover, Select, Table } from "antd";
 import { Sidebar } from "../../More/Sidebar";
 import { RBreadcrumb } from "../../More/RBreadcrumb";
-import { Content } from "antd/es/layout/layout";
 import "./Device.css";
 import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
 import { CRbar } from "../../More/CRbar";
+import { Content } from "antd/es/layout/layout";
 
 const { Option } = Select;
 
@@ -80,6 +80,7 @@ export const Devices = () => {
   const [openConnect, setOpenConnect] = useState<boolean[]>([]);
   const [sttValue, setSttValue] = useState<string>("");
   const [connectValue, setConnectValue] = useState<string>("");
+  const [searchText, setSearchText] = useState("");
 
   async function getCities(db: any) {
     const citiesCol = collection(db, "device");
@@ -95,10 +96,10 @@ export const Devices = () => {
     getCities(db);
   }, []);
 
-  const onDelete = async (id: any) => {
-    await deleteDoc(doc(db, "device", id));
-    window.location.reload();
-  };
+  // const onDelete = async (id: any) => {
+  //   await deleteDoc(doc(db, "device", id));
+  //   window.location.reload();
+  // };
 
   const columns = [
     {
@@ -196,12 +197,12 @@ export const Devices = () => {
         <Link to={`/device/list_device/edit_device/${id}`}> Cập nhật </Link>
       ),
     },
-    {
-      title: " ",
-      dataIndex: "id",
-      key: "id",
-      render: (id: any) => <button onClick={() => onDelete(id)}>Xóa</button>,
-    },
+    // {
+    //   title: " ",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   render: (id: any) => <button onClick={() => onDelete(id)}>Xóa</button>,
+    // },
   ];
 
   const handleOpenChange = (index: number) => (visible: boolean) => {
@@ -276,8 +277,6 @@ export const Devices = () => {
     setCurrent(1);
   };
 
-  const [searchText, setSearchText] = useState("");
-
   const filteredData: Device[] = device.filter((item) =>
     item.name.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -299,7 +298,7 @@ export const Devices = () => {
             <div className="D_dropdown">
               <Select
                 suffixIcon={createCustomSuffixIcon(openSTT)}
-                onDropdownVisibleChange={(openSTT) =>
+                onDropdownVisibleChange={(openSTT: any) =>
                   setOpenSTT([openSTT as boolean])
                 }
                 defaultValue=""
@@ -315,7 +314,7 @@ export const Devices = () => {
               <div className="D_dropdown">
                 <Select
                   suffixIcon={createCustomSuffixIcon(openConnect)}
-                  onDropdownVisibleChange={(openConnect) =>
+                  onDropdownVisibleChange={(openConnect: any) =>
                     setOpenConnect([openConnect as boolean])
                   }
                   defaultValue=""
@@ -350,7 +349,7 @@ export const Devices = () => {
             <Pagination
               className="D_pagination"
               current={current}
-              onChange={(page) => setCurrent(page)}
+              onChange={(page: any) => setCurrent(page)}
               total={filteredData.length}
               pageSize={pageSize}
             />

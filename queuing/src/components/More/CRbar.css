@@ -4,18 +4,15 @@
   height: 32px;
   right: 260px;
   top: 28px;
-
-  /* Orange/$-Orange-50 */
-
   background: #fff2e7;
   border-radius: 32px;
 }
+
 .icon_1 {
   position: absolute;
   width: 20px;
   left: 6px;
   top: 8px;
-
   color: #ffac6a;
 }
 

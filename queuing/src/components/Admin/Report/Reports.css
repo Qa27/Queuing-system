@@ -1,0 +1,25 @@
+.R_add {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 94px;
+  float: right;
+  margin-top: 244px;
+  background: #fff2e7;
+  box-shadow: 0px 0px 6px #e7e9f2;
+  border-radius: 8px 0px 0px 8px;
+}
+
+.R_add > span {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 19px;
+  text-align: center;
+  color: #ff7506;
+}
+
+.R_add:hover {
+  background-color: #fff2e7 !important;
+}

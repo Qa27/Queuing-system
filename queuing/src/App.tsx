@@ -13,12 +13,27 @@ import { ViewService } from "./components/Admin/Service/ViewService";
 import { Numbers } from "./components/Admin/Number/Numbers";
 import { ViewNumber } from "./components/Admin/Number/ViewNumber";
 import { AddNumber } from "./components/Admin/Number/AddNumber";
+import { Reports } from "./components/Admin/Report/Reports";
+import { MRoles } from "./components/Admin/Setting/MRoles";
+import { AddRole } from "./components/Admin/Setting/AddRole";
+import { EditRole } from "./components/Admin/Setting/EditRole";
+import { EditService } from "./components/Admin/Service/EditService";
+import { MAcc } from "./components/Admin/Setting/MAcc";
+import { AddAcc } from "./components/Admin/Setting/AddAcc";
+import { EditAcc } from "./components/Admin/Setting/EditAcc";
+import { MUsers } from "./components/Admin/Setting/MUsers";
+import { Login } from "./components/Login/Login";
+import { LoginForget } from "./components/Login/LoginForget";
+import { NewPass } from "./components/Login/NewPass";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route index element={<Dashboard />}></Route>
+        <Route index element={<Login />} />
+        <Route path="/login/forget" element={<LoginForget />}></Route>
+        <Route path="/login/NewPassword" element={<NewPass />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/infor" element={<Infor />} />
         <Route path="/device/list_device" element={<Devices />} />
         <Route path="/device/list_device/add_device" element={<AddDevice />} />
@@ -36,9 +51,30 @@ function App() {
           path="/service/list_service/view/:id"
           element={<ViewService />}
         />
+        <Route
+          path="/service/list_service/edit_service/:id"
+          element={<EditService />}
+        />
         <Route path="/number/list_number" element={<Numbers />} />
         <Route path="/number/list_number/add_number" element={<AddNumber />} />
         <Route path="/number/list_number/view/:id" element={<ViewNumber />} />
+        <Route path="/report/list_report" element={<Reports />} />
+        <Route path="/setting/manage_role" element={<MRoles />} />
+        <Route path="/setting/manage_role/add_role" element={<AddRole />} />
+        <Route
+          path="/setting/manage_role/edit_role/:id"
+          element={<EditRole />}
+        />
+        <Route path="/setting/manage_account" element={<MAcc />} />
+        <Route
+          path="/setting/manage_account/add_account"
+          element={<AddAcc />}
+        />
+        <Route
+          path="/setting/manage_account/edit_account/:id"
+          element={<EditAcc />}
+        />
+        <Route path="/setting/manage_user" element={<MUsers />} />
       </Routes>
     </div>
   );

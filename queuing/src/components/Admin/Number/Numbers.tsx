@@ -2,16 +2,10 @@ import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
 import { Badge, Input, Layout, Pagination, Select, Table } from "antd";
-import { Content } from "antd/es/layout/layout";
 import { DatePicker } from "antd";
+import { Content } from "antd/es/layout/layout";
 import { Dayjs } from "dayjs";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  Timestamp,
-} from "firebase/firestore/lite";
+import { collection, getDocs, Timestamp } from "firebase/firestore/lite";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { db } from "../../../Server/firebase";
@@ -193,10 +187,10 @@ export const Numbers = () => {
     getCities(db);
   }, []);
 
-  const onDelete = async (id: any) => {
-    await deleteDoc(doc(db, "number", id));
-    window.location.reload();
-  };
+  // const onDelete = async (id: any) => {
+  //   await deleteDoc(doc(db, "number", id));
+  //   window.location.reload();
+  // };
 
   const columns = [
     {
@@ -254,12 +248,12 @@ export const Numbers = () => {
         <Link to={`/number/list_number/view/${id}`}>Chi tiết</Link>
       ),
     },
-    {
-      title: " ",
-      dataIndex: "id",
-      key: "id",
-      render: (id: any) => <button onClick={() => onDelete(id)}>Xóa</button>,
-    },
+    // {
+    //   title: " ",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   render: (id: any) => <button onClick={() => onDelete(id)}>Xóa</button>,
+    // },
   ];
 
   const createCustomSuffixIcon = (openState: boolean[]) => (
@@ -334,8 +328,11 @@ export const Numbers = () => {
     }
   };
 
-  const searchData: Number[] = filteredData.filter((item) =>
-    item.nameUser.toLowerCase().includes(searchText.toLowerCase())
+  const searchData: Number[] = filteredData.filter(
+    (item) =>
+      item.nameUser &&
+      typeof item.nameUser === "string" &&
+      item.nameUser.toLowerCase().includes(searchText.toLowerCase())
   );
 
   const [current, setCurrent] = useState(1);
@@ -357,7 +354,7 @@ export const Numbers = () => {
                 suffixIcon={createCustomSuffixIcon(openNameN)}
                 defaultValue=""
                 onChange={handleNameNChange}
-                onDropdownVisibleChange={(openNameN) =>
+                onDropdownVisibleChange={(openNameN: any) =>
                   setOpenNameN([openNameN])
                 }
               >
@@ -375,7 +372,7 @@ export const Numbers = () => {
               <div className="N_dropdown">
                 <Select
                   suffixIcon={createCustomSuffixIcon(openSttN)}
-                  onDropdownVisibleChange={(openSttN) =>
+                  onDropdownVisibleChange={(openSttN: any) =>
                     setOpenSttN([openSttN as boolean])
                   }
                   defaultValue=""
@@ -393,7 +390,7 @@ export const Numbers = () => {
               <div className="N_dropdown">
                 <Select
                   suffixIcon={createCustomSuffixIcon(openSourceN)}
-                  onDropdownVisibleChange={(openSourceN) =>
+                  onDropdownVisibleChange={(openSourceN: any) =>
                     setOpenSourceN([openSourceN as boolean])
                   }
                   defaultValue=""
@@ -411,8 +408,8 @@ export const Numbers = () => {
                     placeholder={["Ngày bắt đầu", "Ngày kết thúc"]}
                     value={dates || value}
                     disabledDate={disabledDate}
-                    onCalendarChange={(val) => setDates(val)}
-                    onChange={(val) => setValue(val)}
+                    onCalendarChange={(val: any) => setDates(val)}
+                    onChange={(val: any) => setValue(val)}
                     onOpenChange={onOpenChange}
                     suffixIcon={<CalendarIcon />}
                     separator={<DatePickerIcon />}
@@ -437,7 +434,7 @@ export const Numbers = () => {
               <Pagination
                 className="D_pagination"
                 current={current}
-                onChange={(page) => setCurrent(page)}
+                onChange={(page: any) => setCurrent(page)}
                 total={number.length}
                 pageSize={pageSize}
               />

@@ -82,3 +82,57 @@
 .SB_item .active path {
   stroke: white;
 }
+
+.SB_item .ant-menu-submenu-arrow {
+  display: none;
+}
+
+.SB_item .ant-menu-submenu-title {
+  font-weight: 600;
+  font-size: 16px;
+  display: flex;
+  flex-direction: row;
+  color: #7e7d88;
+  line-height: 24px;
+}
+
+.SB_item .ant-menu-submenu-title:hover {
+  color: #ff7506 !important;
+  background-color: #fff2e7 !important;
+}
+.SB_set_icon svg {
+  margin-top: 12px;
+}
+
+.SB_set_text {
+  position: absolute;
+  margin-top: 10px;
+  margin-left: 16px !important;
+}
+
+.SB_set_text svg {
+  position: absolute;
+  margin-top: -18px;
+}
+
+.SB_menu {
+  width: 200px;
+  height: 144px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7e7d88;
+}
+
+.SB_menu .ant-menu-item:hover {
+  background-color: #fff2e7 !important;
+}
+
+.SB_menu .active {
+  /* background-color: #fff2e7 !important; */
+  color: #ff7506 !important;
+}
+
+.SB_menu_link:hover {
+  color: #ff7506 !important;
+}

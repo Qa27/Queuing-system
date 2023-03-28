@@ -1,0 +1,142 @@
+.login_box {
+  position: relative;
+  width: 100%;
+  height: 790px;
+}
+
+.login_logo {
+  position: absolute;
+  width: 170px;
+  height: 136px;
+  margin-left: 209.73px;
+  margin-top: 82px;
+}
+
+.login_form {
+  position: absolute;
+  width: 400px;
+  height: 75px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.login_user {
+  position: absolute;
+  margin-left: 94px;
+  margin-top: 293px;
+}
+
+.login_pass {
+  position: absolute;
+  margin-left: 94px;
+  margin-top: 384px;
+}
+
+.login_forget {
+  position: absolute;
+  margin-left: 94px;
+  margin-top: 485px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #e73f3f;
+}
+
+.login_forget:hover {
+  color: #e73f3f;
+}
+
+.login_submit {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 162px;
+  height: 40px;
+  margin-left: 215px;
+  margin-top: 511px;
+  background: #ff9138;
+  box-shadow: 0px 0px 6px #e7e9f2;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.login_submit:hover {
+  background: #ff9138 !important;
+}
+
+.login_user input {
+  width: 400px;
+  height: 44px;
+  background: #ffffff;
+}
+
+.login_pass input {
+  width: 360px;
+  height: 34px;
+}
+
+.login_user input:hover,
+.login_user input:focus-within,
+.login_pass .ant-input-affix-wrapper:hover,
+.login_pass .ant-input-affix-wrapper:focus-within {
+  border: 1.5px solid #ffac6a !important;
+  box-shadow: none !important;
+}
+
+.login_error {
+  position: absolute;
+  width: 233px;
+  height: 21px;
+  margin-left: 94.23px;
+  margin-top: 465px;
+}
+
+.login_error_title {
+  position: absolute;
+  margin-left: 3.23px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  color: #e73f3f;
+}
+
+.login_right {
+  position: absolute;
+  width: 848px;
+  height: 790px;
+  margin-left: 688px;
+  background: #ffffff;
+}
+
+.login_img {
+  position: absolute;
+  width: 605px;
+  height: 614.06px;
+  margin-left: 79px;
+  margin-top: 112.94px;
+}
+
+.login_title1 {
+  position: absolute;
+  margin-left: 454px;
+  margin-top: 407px;
+  font-weight: 400;
+  font-size: 34px;
+  line-height: 51px;
+  color: #ff7506;
+}
+
+.login_title2 {
+  position: absolute;
+  margin-left: 454px;
+  margin-top: 454px;
+  font-weight: 900;
+  font-size: 36px;
+  line-height: 54px;
+  color: #ff7506;
+}

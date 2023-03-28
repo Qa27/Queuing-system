@@ -8,20 +8,10 @@ import { doc, getDoc, updateDoc } from "firebase/firestore/lite";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../../Server/firebase";
-import { CRbar } from "../../More/CRbar";
 import { RBreadcrumb } from "../../More/RBreadcrumb";
 import { Sidebar } from "../../More/Sidebar";
 
 const { Option } = Select;
-
-const OPTIONS = [
-  "Khám tim mạch",
-  "Khám sản phụ khoa",
-  "Khám răng hàm mặt",
-  "Khám tai mũi họng",
-  "Khám hô hấp",
-  "Khám tổng quát",
-];
 
 const StartSVG = () => (
   <svg
@@ -47,71 +37,59 @@ const layout = {
   wrapperCol: { span: 16 },
 };
 
-const onFinish = (values: any) => {
-  console.log(values);
-};
-
-export const EditDevice = () => {
+export const EditAcc = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [idDevice, setIdDevice] = useState("");
-  const [nameDevice, setNameDevice] = useState("");
-  const [ipDevice, setIPDevice] = useState("");
-  const [typeDevice, setTypeDevice] = useState("");
-  const [userDevice, setUserDevice] = useState("");
-  const [passDevice, setPassDevice] = useState("");
-  const [serviceDevice, setserviceDevice] = useState<string[]>([]);
-  const filteredOptions = OPTIONS.filter((o) => !serviceDevice.includes(o));
-  const [newIdDevice, setNewIdDevice] = useState("");
-  const [newnameDevice, setNewNameDevice] = useState("");
-  const [newipDevice, setNewIPdevice] = useState("");
-  const [newtypeDevice, setNewTypeDevice] = useState("");
-  const [newuserDevice, setNewUserDevice] = useState("");
-  const [newpassDevice, setNewPassDevice] = useState("");
-  const [newserviceDevice, setNewServiceDevice] = useState<string[]>([]);
-  const [openSTT, setOpenSTT] = useState<boolean[]>([]);
+  const [userA, setUserA] = useState("");
+  const [nameA, setNameA] = useState("");
+  const [numA, setNumA] = useState("");
+  const [emailA, setEmailA] = useState("");
+  const [roleA, setRoleA] = useState("");
+  const [sttA, setSttA] = useState("");
+  const [passA, setPassA] = useState("");
+  const [repassA, setRePassA] = useState("");
+  const [openRoleA, setOpenRoleA] = useState<boolean[]>([]);
+  const [openRoleB, setOpenRoleB] = useState<boolean[]>([]);
+  const [newUserA, setNewUserA] = useState("");
+  const [newNameA, setNewNameA] = useState("");
+  const [newNumA, setNewNumA] = useState("");
+  const [newEmailA, setNewEmailA] = useState("");
+  const [newRoleA, setNewRoleA] = useState("");
+  const [newSttA, setNewSttA] = useState("");
+  const [newPassA, setNewPassA] = useState("");
+  const [newRePassA, setNewRePassA] = useState("");
 
-  const decRef = id ? doc(db, "device", id) : null;
+  const decRef = id ? doc(db, "acc", id) : null;
   const getd = async () => {
     if (decRef) {
       const deviceSnapshot = await getDoc(decRef);
-      setNewIdDevice(deviceSnapshot?.data()?.idD);
-      setNewNameDevice(deviceSnapshot?.data()?.name);
-      setNewIPdevice(deviceSnapshot?.data()?.ip);
-      setNewTypeDevice(deviceSnapshot?.data()?.type);
-      setNewUserDevice(deviceSnapshot?.data()?.username);
-      setNewPassDevice(deviceSnapshot?.data()?.password);
-      setNewServiceDevice(deviceSnapshot?.data()?.service);
+      setNewUserA(deviceSnapshot?.data()?.userA);
+      setNewNameA(deviceSnapshot?.data()?.nameA);
+      setNewNumA(deviceSnapshot?.data()?.numA);
+      setNewEmailA(deviceSnapshot?.data()?.emailA);
+      setNewRoleA(deviceSnapshot?.data()?.roleA);
+      setNewSttA(deviceSnapshot?.data()?.sttA);
+      setNewPassA(deviceSnapshot?.data()?.passA);
+      setNewRePassA(deviceSnapshot?.data()?.repassA);
     }
   };
   getd();
 
-  const handleChange = (value: any) => {
-    setserviceDevice(value);
-  };
-
   const onUpdateBtn = async () => {
-    if (
-      idDevice &&
-      nameDevice &&
-      ipDevice &&
-      typeDevice &&
-      userDevice &&
-      passDevice &&
-      serviceDevice
-    ) {
+    if (nameA && numA && emailA && roleA && sttA && passA && repassA) {
       if (decRef) {
         await updateDoc(decRef, {
-          idD: idDevice,
-          name: nameDevice,
-          ip: ipDevice,
-          type: typeDevice,
-          username: userDevice,
-          password: passDevice,
-          service: serviceDevice,
+          userA: userA,
+          nameA: nameA,
+          numA: numA,
+          emailA: emailA,
+          roleA: roleA,
+          sttA: sttA,
+          passA: passA,
+          repassA: repassA,
         });
       }
-      navigate("/device/list_device");
+      navigate("/setting/manage_account");
     } else {
       message.error("Vui lòng điền đầy đủ thông tin!");
     }
@@ -161,127 +139,164 @@ export const EditDevice = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="AD_title">Quản lý thiết bị</span>
+          <span className="AD_title">Quản lý tài khoản</span>
           <div className="AD_box">
-            <span className="AD_box_title">Thông tin thiết bị</span>
+            <span className="AD_box_title">Thông tin tài khoản</span>
             <Form
               className="AD_form"
               {...layout}
               name="nest-messages"
-              onFinish={onFinish}
+              onFinish={onUpdateBtn}
               style={{ maxWidth: 600 }}
               validateMessages={validateMessages}
             >
               <Row>
                 <Col className="D_col1" span={12}>
                   <Form.Item
-                    name={["id"]}
-                    label="Mã thiết bị"
+                    name={["nameA"]}
+                    label="Họ tên"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={newIdDevice}
+                      value={newNameA}
                       onChange={(e: any) => {
-                        setIdDevice(e.target.value);
+                        setNameA(e.target.value);
                       }}
-                      placeholder={newIdDevice}
+                      placeholder={newNameA}
                     />
                   </Form.Item>
                   <Form.Item
-                    name={["name"]}
-                    label="Tên thiết bị"
+                    name={["numA"]}
+                    label="Số điện thoại"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={nameDevice}
+                      value={newNumA}
                       onChange={(e: any) => {
-                        setNameDevice(e.target.value);
+                        setNumA(e.target.value);
                       }}
-                      placeholder={newnameDevice}
+                      placeholder={newNumA}
                     />
                   </Form.Item>
                   <Form.Item
-                    name={["IP"]}
-                    label="Địa chỉ IP"
+                    name={["emailA"]}
+                    label="Email"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={ipDevice}
+                      value={newEmailA}
                       onChange={(e: any) => {
-                        setIPDevice(e.target.value);
+                        setEmailA(e.target.value);
                       }}
-                      placeholder={newipDevice}
+                      placeholder={newEmailA}
                     />
+                  </Form.Item>
+                  <Form.Item
+                    name={["roleA"]}
+                    label="Vai trò"
+                    rules={[{ required: true }]}
+                  >
+                    <Select
+                      value={newRoleA}
+                      onChange={(value: string) => {
+                        setRoleA(value);
+                      }}
+                      className="DD_device"
+                      placeholder={newRoleA}
+                      onDropdownVisibleChange={(open: any) =>
+                        setOpenRoleA([open])
+                      }
+                      suffixIcon={createCustomSuffixIcon(openRoleA)}
+                      allowClear
+                    >
+                      <Option value="Kế toán">Kế toán</Option>
+                      <Option value="Quản lý">Quản lý</Option>
+                      <Option value="Admin">Admin</Option>
+                    </Select>
                   </Form.Item>
                 </Col>
                 <Col className="D_col1" span={12}>
                   <Form.Item
-                    name={["type"]}
-                    label="Loại thiết bị"
-                    rules={[{ required: true }]}
-                  >
-                    <Select
-                      suffixIcon={createCustomSuffixIcon(openSTT)}
-                      onDropdownVisibleChange={(open: any) =>
-                        setOpenSTT([open])
-                      }
-                      value={typeDevice}
-                      onChange={(value: string) => {
-                        setTypeDevice(value);
-                      }}
-                      className="DD_device"
-                      placeholder={newtypeDevice}
-                      allowClear
-                    >
-                      <Option value="Kiosk">Kiosk</Option>
-                      <Option value="Display counter">Display counter</Option>
-                    </Select>
-                  </Form.Item>
-                  <Form.Item
-                    name={["username"]}
+                    name={["userA"]}
                     label="Tên đăng nhập"
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={userDevice}
+                      value={newUserA}
                       onChange={(e: any) => {
-                        setUserDevice(e.target.value);
+                        setUserA(e.target.value);
                       }}
-                      placeholder={newuserDevice}
+                      placeholder={newUserA}
                     />
                   </Form.Item>
                   <Form.Item
-                    name={["password"]}
+                    className="AA_pass"
+                    name={["passA"]}
                     label="Mật khẩu"
                     rules={[{ required: true }]}
                   >
-                    <Input
-                      value={passDevice}
+                    <Input.Password
+                      value={newPassA}
                       onChange={(e: any) => {
-                        setPassDevice(e.target.value);
+                        setPassA(e.target.value);
                       }}
-                      placeholder={newpassDevice}
+                      placeholder={newPassA}
                     />
+                  </Form.Item>
+                  <Form.Item
+                    className="AA_pass"
+                    name={["repassA"]}
+                    label="Nhập lại mật khẩu"
+                    dependencies={["password"]}
+                    hasFeedback
+                    rules={[
+                      {
+                        required: true,
+                      },
+                      ({ getFieldValue }) => ({
+                        validator(_, value) {
+                          if (!value || getFieldValue("passA") === value) {
+                            return Promise.resolve();
+                          }
+                          return Promise.reject(
+                            new Error("Mật khẩu không trùng khớp")
+                          );
+                        },
+                      }),
+                    ]}
+                  >
+                    <Input.Password
+                      value={newRePassA}
+                      onChange={(e: any) => {
+                        setRePassA(e.target.value);
+                      }}
+                      placeholder={newRePassA}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    name={["sttA"]}
+                    label="Vai trò"
+                    rules={[{ required: true }]}
+                  >
+                    <Select
+                      value={newSttA}
+                      onChange={(value: string) => {
+                        setSttA(value);
+                      }}
+                      className="DD_device"
+                      placeholder="Chọn vai trò"
+                      onDropdownVisibleChange={(open: any) =>
+                        setOpenRoleB([open])
+                      }
+                      suffixIcon={createCustomSuffixIcon(openRoleB)}
+                      allowClear
+                    >
+                      <Option value="Hoạt động">Hoạt động</Option>
+                      <Option value="Ngưng hoạt động">Ngưng hoạt động</Option>
+                    </Select>
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item
-                className="AD_form_center"
-                name={["tag"]}
-                label="Dịch vụ thiết bị"
-                rules={[{ required: true }]}
-              >
-                <Select
-                  mode="multiple"
-                  placeholder={newserviceDevice.join(", ")}
-                  value={serviceDevice}
-                  onChange={handleChange}
-                  options={filteredOptions.map((item) => ({
-                    value: item,
-                    label: item,
-                  }))}
-                />
-              </Form.Item>
               <div className="AD_note">
                 <StartIcon />
                 <span className="AD_note_text">
@@ -294,7 +309,7 @@ export const EditDevice = () => {
                   type="primary"
                   onClick={() => navigate(-1)}
                 >
-                  Go Back
+                  Hủy bỏ
                 </Button>
                 <Button
                   onClick={onUpdateBtn}
@@ -302,13 +317,12 @@ export const EditDevice = () => {
                   type="primary"
                   htmlType="submit"
                 >
-                  Cập nhật thiết bị
+                  Cập nhật
                 </Button>
               </Form.Item>
             </Form>
           </div>
         </Content>
-        <CRbar />
       </Layout>
     </div>
   );

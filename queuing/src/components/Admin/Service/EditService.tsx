@@ -15,18 +15,13 @@ import {
 } from "antd";
 import { CheckboxChangeEvent } from "antd/es/checkbox";
 import { Content } from "antd/es/layout/layout";
-import { addDoc, collection } from "firebase/firestore/lite";
+import { doc, getDoc, updateDoc } from "firebase/firestore/lite";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../../../Server/firebase";
+import { CRbar } from "../../More/CRbar";
 import { RBreadcrumb } from "../../More/RBreadcrumb";
 import { Sidebar } from "../../More/Sidebar";
-import "./AddService.css";
-
-const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
 
 const StartSVG = () => (
   <svg
@@ -47,8 +42,14 @@ const StartIcon = (props: Partial<CustomIconComponentProps>) => (
   <Icon component={StartSVG} {...props} />
 );
 
-export const AddService = () => {
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+
+export const EditService = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [idService, setIdService] = useState("");
   const [nameService, setNameService] = useState("");
   const [desService, setDesService] = useState("");
@@ -60,6 +61,36 @@ export const AddService = () => {
   const [preNumService, setPreNumService] = useState<number | null>(1);
   const [surNumService, setSurNumService] = useState<number | null>(1);
   const [numService2, setNumService2] = useState<number | null>(9999);
+  const [newIdService, setNewIdService] = useState("");
+  const [newNameService, setNewNameService] = useState("");
+  const [newDesService, setNewDesService] = useState("");
+  const [newAutoService, setNewAutoService] = useState<boolean | null>(null);
+  const [newPreService, setNewPreService] = useState<boolean | null>(null);
+  const [newSurService, setNewSurService] = useState<boolean | null>(null);
+  const [newResetService, setNewResetService] = useState<boolean | null>(null);
+  const [newNumService, setNewNumService] = useState<number | null>(1);
+  const [newPreNumService, setNewPreNumService] = useState<number | null>(1);
+  const [newSurNumService, setNewSurNumService] = useState<number | null>(1);
+  const [newNumService2, setNewNumService2] = useState<number | null>(9999);
+
+  const decRef = id ? doc(db, "service", id) : null;
+  const getd = async () => {
+    if (decRef) {
+      const deviceSnapshot = await getDoc(decRef);
+      setNewIdService(deviceSnapshot?.data()?.idS);
+      setNewNameService(deviceSnapshot?.data()?.nameS);
+      setNewDesService(deviceSnapshot?.data()?.descriptionS);
+      setNewAutoService(deviceSnapshot?.data()?.autoS);
+      setNewPreService(deviceSnapshot?.data()?.prefixS);
+      setNewSurService(deviceSnapshot?.data()?.surfixS);
+      setNewResetService(deviceSnapshot?.data()?.resetS);
+      setNewNumService(deviceSnapshot?.data()?.numberS);
+      setNewPreNumService(deviceSnapshot?.data()?.preNumS);
+      setNewSurNumService(deviceSnapshot?.data()?.surNumS);
+      setNewNumService2(deviceSnapshot?.data()?.aumax);
+    }
+  };
+  getd();
 
   const handleChange = (value: number | null) => {
     setNumService(value);
@@ -96,21 +127,24 @@ export const AddService = () => {
     return numberValue2.toString().padStart(4, "0");
   };
 
-  const onSubmitBtn = async () => {
+  const onUpdateBtn = async () => {
     if (idService && nameService && desService) {
-      await addDoc(collection(db, "service"), {
-        idS: idService,
-        nameS: nameService,
-        descriptionS: desService,
-        autoS: autoService ?? null,
-        prefixS: preService ?? null,
-        surfixS: surService ?? null,
-        auNumS: numService,
-        aumax: numService2,
-        preNumS: preNumService ?? null,
-        surNumS: surNumService ?? null,
-        resetS: resetService ?? null,
-      });
+      if (decRef) {
+        await updateDoc(decRef, {
+          idS: idService,
+          nameS: nameService,
+          descriptionS: desService,
+          autoS: autoService ?? null,
+          prefixS: preService ?? null,
+          surfixS: surService ?? null,
+          numberS: numService,
+          auNumS: numService,
+          aumax: numService2,
+          preNumS: preNumService ?? null,
+          surNumS: surNumService ?? null,
+          resetS: resetService ?? null,
+        });
+      }
       navigate("/service/list_service");
     } else {
       message.error("Vui lòng điền đầy đủ thông tin!");
@@ -134,7 +168,7 @@ export const AddService = () => {
               className="AD_form"
               {...layout}
               name="nest-messages"
-              onFinish={onSubmitBtn}
+              onFinish={onUpdateBtn}
               style={{ maxWidth: 600 }}
               validateMessages={validateMessages}
             >
@@ -146,11 +180,11 @@ export const AddService = () => {
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={idService}
+                      value={newIdService}
                       onChange={(e: any) => {
                         setIdService(e.target.value);
                       }}
-                      placeholder="Nhập mã dịch vụ"
+                      placeholder={newIdService}
                     />
                   </Form.Item>
                   <Form.Item
@@ -159,11 +193,11 @@ export const AddService = () => {
                     rules={[{ required: true }]}
                   >
                     <Input
-                      value={nameService}
+                      value={newNameService}
                       onChange={(e: any) => {
                         setNameService(e.target.value);
                       }}
-                      placeholder="Nhập tên dịch vụ"
+                      placeholder={newNameService}
                     />
                   </Form.Item>
                 </Col>
@@ -175,11 +209,11 @@ export const AddService = () => {
                   >
                     <Input.TextArea
                       className="desS"
-                      value={desService}
+                      value={newDesService}
                       onChange={(e: any) => {
                         setDesService(e.target.value);
                       }}
-                      placeholder="Mô tả dịch vụ"
+                      placeholder={newDesService}
                     />
                   </Form.Item>
                 </Col>
@@ -187,7 +221,7 @@ export const AddService = () => {
               <span className="S_box_title">Quy tắc cấp số</span>
               <div style={{ marginTop: "12px" }} className="autoS">
                 <Checkbox
-                  checked={autoService || false}
+                  checked={newAutoService || false}
                   onChange={(e: CheckboxChangeEvent) => {
                     setAutoService(e.target.checked);
                   }}
@@ -197,7 +231,7 @@ export const AddService = () => {
                     className="numS"
                     min={1}
                     max={9999}
-                    value={numService}
+                    value={newNumService}
                     onChange={handleChange}
                     formatter={formatNumber}
                   />
@@ -208,14 +242,14 @@ export const AddService = () => {
                     className="numS2"
                     min={1}
                     max={9999}
-                    value={numService2}
+                    value={newNumService2}
                     onChange={handleChange2}
                     formatter={formatNumber2}
                   />
                 </Checkbox>
                 <div className="autoS">
                   <Checkbox
-                    checked={preService || false}
+                    checked={newPreService || false}
                     onChange={(e: CheckboxChangeEvent) => {
                       setPreService(e.target.checked);
                     }}
@@ -226,7 +260,7 @@ export const AddService = () => {
                       className="numS"
                       min={1}
                       max={9999}
-                      value={preNumService}
+                      value={newPreNumService}
                       onChange={handleChange3}
                       formatter={formatNumber}
                     />
@@ -234,7 +268,7 @@ export const AddService = () => {
                 </div>
                 <div className="autoS">
                   <Checkbox
-                    checked={surService || false}
+                    checked={newSurService || false}
                     onChange={(e: CheckboxChangeEvent) => {
                       setSurService(e.target.checked);
                     }}
@@ -245,7 +279,7 @@ export const AddService = () => {
                       className="numS"
                       min={1}
                       max={9999}
-                      value={surNumService}
+                      value={newSurNumService}
                       onChange={handleChange4}
                       formatter={formatNumber}
                     />
@@ -253,7 +287,7 @@ export const AddService = () => {
                 </div>
                 <div style={{ marginTop: "20px" }} className="autoS">
                   <Checkbox
-                    checked={resetService || false}
+                    checked={newResetService || false}
                     onChange={(e: CheckboxChangeEvent) => {
                       setResetService(e.target.checked);
                     }}
@@ -277,17 +311,18 @@ export const AddService = () => {
                   Hủy bỏ
                 </Button>
                 <Button
-                  onClick={onSubmitBtn}
+                  onClick={onUpdateBtn}
                   className="D_addD"
                   type="primary"
                   htmlType="submit"
                 >
-                  Thêm dịch vụ
+                  Cập nhật
                 </Button>
               </Form.Item>
             </Form>
           </div>
         </Content>
+        <CRbar />
       </Layout>
     </div>
   );

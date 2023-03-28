@@ -21,8 +21,6 @@
 
 .AD_box_title {
   position: absolute;
-  width: 160px;
-  height: 30px;
   margin-left: 24px;
   margin-top: 16px;
   font-weight: 700;
@@ -66,13 +64,10 @@ Form {
   box-shadow: none !important;
 }
 
-.DD_device:where(.css-dev-only-do-not-override-ph9edi).ant-select-single:not(
-    .ant-select-customize-input
-  )
-  .ant-select-selector {
+.DD_device .ant-select-selector {
   align-items: center;
-  width: 540px;
-  height: 44px;
+  width: 540px !important;
+  height: 44px !important;
 }
 
 .ant-select-selector {
@@ -122,8 +117,6 @@ Form {
   font-size: 14px;
   color: #ffffff;
 }
-
-
 
 .AD_note {
   display: flex;

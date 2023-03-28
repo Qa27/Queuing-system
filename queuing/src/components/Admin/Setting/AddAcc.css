@@ -1,0 +1,21 @@
+.AA_pass #nest-messages_passA,
+.AA_pass #nest-messages_repassA,
+.AA_pass #nest-messages_passA:hover,
+.AA_pass #nest-messages_repassA:hover {
+  border: white !important;
+}
+
+.AA_pass .ant-form-item-control-input-content {
+  width: 540px;
+  height: 44px;
+}
+
+.AA_pass .ant-input-affix-wrapper:hover,
+.AA_pass .ant-input-affix-wrapper:focus-within {
+  border: 1.5px solid #ffac6a !important;
+  box-shadow: none !important;
+}
+
+.AD_form .AA_pass input {
+  height: 35px;
+}

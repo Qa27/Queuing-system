@@ -167,7 +167,7 @@ export const Rightbar = () => {
     <div className="Rightbar">
       <CRbar />
       <p className="Rbar_text">Tổng quan</p>
-      <Link to="/service">
+      <Link to="/device/list_device">
         <Row className="stt">
           <Col span={5}>
             <div className="circle">
@@ -205,7 +205,7 @@ export const Rightbar = () => {
           </Col>
         </Row>
       </Link>
-      <Link to="/service">
+      <Link to="/service/list_service">
         <Row className="stt">
           <Col span={5}>
             <div className="circle">
@@ -244,7 +244,7 @@ export const Rightbar = () => {
           </Col>
         </Row>
       </Link>
-      <Link to="/service">
+      <Link to="/number/list_number">
         <Row className="stt">
           <Col span={5}>
             <div className="circle">

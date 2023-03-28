@@ -13,14 +13,38 @@ const { Option } = Select;
 
 export const AddNumber = () => {
   const navigate = useNavigate();
+  const [openSTT, setOpenSTT] = useState<boolean[]>([]);
   const [open, setOpen] = useState(false);
+  const [nameN, setNameN] = useState("");
+  const [timeN, setTimeN] = useState("");
+  const [expiryN, setExpiryN] = useState("");
 
   const onSubmitBtn = async () => {
     await addDoc(collection(db, "number"), {
-      //   nameN: nameN,
+      nameN: nameN,
+      expiryTime: expiryN,
+      currentDateTime: timeN,
     });
-    navigate("/number/list_number");
+    setOpen(false);
+    setNameN("");
+    setExpiryN(expiryTime);
+    setTimeN(currentDateTime);
   };
+
+  const currentDateTime = new Date()
+    .toLocaleString("vi-VN", { hour12: false })
+    .replace(/:\d{2}\s/, " - ");
+
+  const currentDate = new Date();
+
+  const twoDaysFromNow = new Date(
+    currentDate.setDate(currentDate.getDate() + 2)
+  );
+  twoDaysFromNow.setHours(Math.floor(Math.random() * (20 - 8) + 8));
+  twoDaysFromNow.setMinutes(Math.floor(Math.random() * 60));
+  const expiryTime = twoDaysFromNow
+    .toLocaleString("vi-VN", { hour12: false })
+    .replace(/:\d{2}\s/, " - ");
 
   const createCustomSuffixIcon = (openState: boolean[]) => (
     <svg
@@ -68,12 +92,14 @@ export const AddNumber = () => {
             <span className="AN_box_text">Dịch vụ khách hàng lựa chọn</span>
             <div className="AN_dropdown">
               <Select
-                // suffixIcon={createCustomSuffixIcon(openSTT)}
-                // onDropdownVisibleChange={(openSTT) =>
-                //   setOpenSTT([openSTT as boolean])
-                // }
-                defaultValue=""
-                // onChange={handleSttChange}
+                suffixIcon={createCustomSuffixIcon(openSTT)}
+                onDropdownVisibleChange={(openSTT: any) =>
+                  setOpenSTT([openSTT as boolean])
+                }
+                value={nameN}
+                onChange={(value: string) => {
+                  setNameN(value);
+                }}
               >
                 <Option value="1">Chọn dịch vụ</Option>
                 <Option value="Khám tim mạch">Khám tim mạch</Option>
@@ -93,10 +119,13 @@ export const AddNumber = () => {
                 Hủy bỏ
               </Button>
               <Button
-                onClick={() => setOpen(true)}
                 className="AN_addD"
                 type="primary"
                 htmlType="submit"
+                onClick={() => {
+                  setOpen(true);
+                  // onSubmitBtn();
+                }}
               >
                 In số
               </Button>
@@ -110,14 +139,15 @@ export const AddNumber = () => {
               >
                 <span className="AD_modal_number">2001201</span>
                 <span className="AD_modal_text">
-                  DV: Khám răng hàm mặt <strong>(tại quầy số 1)</strong>
+                  DV: {nameN} <strong>(tại quầy số 1)</strong>
                 </span>
                 <div className="AD_modal_box2">
                   <span className="AD_modal_time">
-                    Thời gian cấp: <span>123</span>
+                    Thời gian cấp: <span>{currentDateTime}</span>
                   </span>
                   <span className="AD_modal_box2_expiry">
-                    Hạn sử dụng: <span>123</span>
+                    Hạn sử dụng:
+                    <span>{expiryTime}</span>
                   </span>
                 </div>
               </Modal>

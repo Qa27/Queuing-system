@@ -1,32 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { BellFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import type { MenuProps } from "antd";
+import { Menu } from "antd";
 import { Dropdown } from "antd";
 import "./CRbar.css";
 
-const items: MenuProps["items"] = [
-  {
-    label: <Link to="/device">item 1</Link>,
-    key: "0",
-  },
-  {
-    label: <Link to="/device">item 2</Link>,
-    key: "1",
-  },
-  {
-    label: <Link to="/device">item 3</Link>,
-    key: "3",
-  },
-];
+const menu = (
+  <Menu className="CR_menu">
+    <Menu.Item key="0">Thông báo</Menu.Item>
+    <Menu.Item key="1">
+      <Link to="/device/list_device/view/:id">item 1</Link>
+    </Menu.Item>
+    <Menu.Item key="2">
+      <Link to="/device">item 2</Link>
+    </Menu.Item>
+    <Menu.Item key="3">
+      <Link to="/device">item 3</Link>
+    </Menu.Item>
+  </Menu>
+);
 
 export const CRbar = () => {
-  return (
+  const [isClicked, setIsClicked] = useState(false);
+  const handleClick = () => {
+    setIsClicked(!isClicked);
+  };
 
+  return (
     <div className="right">
       <div className="crbar_1">
-        <Dropdown menu={{ items }} trigger={["click"]}>
-          <BellFilled className="icon_1" />
+        <Dropdown overlay={menu} trigger={["click"]}>
+          <BellFilled
+            className={`icon_1 ${isClicked ? "clicked" : "unclicked"}`}
+            onClick={handleClick}
+          />
         </Dropdown>
       </div>
       <div className="crbar_2">

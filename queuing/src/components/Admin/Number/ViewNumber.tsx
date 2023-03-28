@@ -145,6 +145,7 @@ export const ViewNumber = () => {
           <section className="section_content">
             <Button
               className="V_add"
+              type="primary"
               onClick={() => navigate(-1)}
             >
               <BackIcon />
