@@ -10,7 +10,7 @@
 
 .AN_box_title {
   position: absolute;
-  margin-left: 501px;
+  margin-left: 420px;
   margin-top: 24px;
   font-weight: 700;
   font-size: 32px;
@@ -59,6 +59,10 @@
   margin-left: 465px;
 }
 
+.AN_addD:hover {
+  border: 1.5px solid #ff9138 !important ;
+}
+
 .AN_back span {
   font-weight: 700;
   font-size: 16px;
@@ -96,7 +100,7 @@
 }
 
 .AD_modal .ant-modal-close-x {
-  color: #FF9138;
+  color: #ff9138;
 }
 
 .AD_modal .ant-modal-title {
@@ -163,4 +167,62 @@
 }
 .AD_modal_box2_expiry > span {
   margin-left: 22px;
+}
+
+.ant-picker-dropdown .ant-picker-today-btn {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #ff7506;
+}
+
+.ant-picker-focused {
+  border-color: #ff7506;
+  box-shadow: 0px 0px 6px #e7e9f2;
+}
+
+.ant-picker:hover {
+  border: 1.5px solid #ff9138 !important ;
+}
+
+.ant-picker-cell-inner::before {
+  border: 1.5px solid #ff9138 !important;
+}
+
+/* .ant-picker-cell-inner:active {
+  background-color: white !important;
+  color: #282739 !important;
+} */
+
+.AN_btn_on .ant-modal-footer .ant-btn-default {
+  border-color: #ff7506;
+  color: #ff7506;
+}
+
+.AN_btn_on .ant-btn-default:hover {
+  border-color: #ff7506;
+  color: #ff7506;
+}
+
+.AN_btn_on .ant-btn-primary {
+  background-color: white;
+  border-color: #ff7506;
+  color: #ff7506;
+}
+
+.AN_btn_on .ant-btn-primary:hover {
+  background-color: white;
+  border-color: #ff7506;
+  color: #ff7506;
+}
+
+.AN_btn_on .ant-modal-body .ant-btn-default {
+  margin-left: 10px;
+  margin-top: 10px;
+}
+
+.selected {
+  background-color: white;
+  border-color: #ff7506;
+  color: #ff7506;
 }

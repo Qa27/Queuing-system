@@ -134,7 +134,7 @@ export const MAcc = () => {
       dataIndex: "id",
       key: "id",
       render: (id: any) => (
-        <Link to={`/setting/manage_account/edit_account/${id}`}>Cập nhật</Link>
+        <Link to={`/manage_account/${id}`}>Cập nhật</Link>
       ),
     },
   ];
@@ -238,7 +238,7 @@ export const MAcc = () => {
             </div>
           </div>
           <section className="section_content">
-            <Link to="/setting/manage_account/add_account" className="D_add">
+            <Link to="/manage_account/add_account" className="D_add">
               <AddIcon />
               <span>Thêm tài khoản</span>
             </Link>

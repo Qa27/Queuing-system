@@ -15,12 +15,12 @@ import { Sidebar } from "../../More/Sidebar";
 const { Option } = Select;
 
 const OPTIONS = [
-  "Khám tim mạch",
-  "Khám sản phụ khoa",
-  "Khám răng hàm mặt",
-  "Khám tai mũi họng",
-  "Khám hô hấp",
-  "Khám tổng quát",
+  "Cardiovascular examination",
+  "Obstetrics - Gynecological examination",
+  "Dental checkup",
+  "Ear, nose and throat examination",
+  "Respiratory examination",
+  "General examination",
 ];
 
 const StartSVG = () => (
@@ -111,14 +111,14 @@ export const EditDevice = () => {
           service: serviceDevice,
         });
       }
-      navigate("/device/list_device");
+      navigate("/list_device");
     } else {
-      message.error("Vui lòng điền đầy đủ thông tin!");
+      message.error("Please complete all information!");
     }
   };
 
   const validateMessages = {
-    required: "${label} cần được nhập!",
+    required: "${label} need to be entered!",
   };
 
   const createCustomSuffixIcon = (openState: boolean[]) => (
@@ -161,9 +161,9 @@ export const EditDevice = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="AD_title">Quản lý thiết bị</span>
+          <span className="AD_title">Equipment management</span>
           <div className="AD_box">
-            <span className="AD_box_title">Thông tin thiết bị</span>
+            <span className="AD_box_title">Device Information</span>
             <Form
               className="AD_form"
               {...layout}
@@ -176,7 +176,7 @@ export const EditDevice = () => {
                 <Col className="D_col1" span={12}>
                   <Form.Item
                     name={["id"]}
-                    label="Mã thiết bị"
+                    label="Device code"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -189,7 +189,7 @@ export const EditDevice = () => {
                   </Form.Item>
                   <Form.Item
                     name={["name"]}
-                    label="Tên thiết bị"
+                    label="Device name"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -202,7 +202,7 @@ export const EditDevice = () => {
                   </Form.Item>
                   <Form.Item
                     name={["IP"]}
-                    label="Địa chỉ IP"
+                    label="IP address"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -217,7 +217,7 @@ export const EditDevice = () => {
                 <Col className="D_col1" span={12}>
                   <Form.Item
                     name={["type"]}
-                    label="Loại thiết bị"
+                    label="Type of device"
                     rules={[{ required: true }]}
                   >
                     <Select
@@ -239,7 +239,7 @@ export const EditDevice = () => {
                   </Form.Item>
                   <Form.Item
                     name={["username"]}
-                    label="Tên đăng nhập"
+                    label="Username"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -252,7 +252,7 @@ export const EditDevice = () => {
                   </Form.Item>
                   <Form.Item
                     name={["password"]}
-                    label="Mật khẩu"
+                    label="Password"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -268,7 +268,7 @@ export const EditDevice = () => {
               <Form.Item
                 className="AD_form_center"
                 name={["tag"]}
-                label="Dịch vụ thiết bị"
+                label="Equipment service"
                 rules={[{ required: true }]}
               >
                 <Select
@@ -284,9 +284,7 @@ export const EditDevice = () => {
               </Form.Item>
               <div className="AD_note">
                 <StartIcon />
-                <span className="AD_note_text">
-                  Là trường thông tin bắt buộc
-                </span>
+                <span className="AD_note_text">This is a required field</span>
               </div>
               <Form.Item className="D_bottom">
                 <Button
@@ -294,7 +292,7 @@ export const EditDevice = () => {
                   type="primary"
                   onClick={() => navigate(-1)}
                 >
-                  Go Back
+                  Back
                 </Button>
                 <Button
                   onClick={onUpdateBtn}
@@ -302,7 +300,7 @@ export const EditDevice = () => {
                   type="primary"
                   htmlType="submit"
                 >
-                  Cập nhật thiết bị
+                  Device update
                 </Button>
               </Form.Item>
             </Form>

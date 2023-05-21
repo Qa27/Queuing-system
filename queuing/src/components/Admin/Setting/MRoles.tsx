@@ -105,7 +105,7 @@ export const MRoles = () => {
       dataIndex: "id",
       key: "id",
       render: (id: any) => (
-        <Link to={`/setting/manage_role/edit_role/${id}`}> Cập nhật </Link>
+        <Link to={`/manage_role/${id}`}> Cập nhật </Link>
       ),
     },
   ];
@@ -145,7 +145,7 @@ export const MRoles = () => {
               />
             </div>
             <section className="section_content">
-              <Link to="/setting/manage_role/add_role" className="D_add">
+              <Link to="/manage_role/add_role" className="D_add">
                 <AddIcon />
                 <span>Thêm vai trò</span>
               </Link>

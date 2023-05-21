@@ -63,7 +63,7 @@ export const AddAcc = () => {
         passA: passA,
         repassA: repassA,
       });
-      navigate("/setting/manage_account");
+      navigate("/manage_account");
     } else {
       message.error("Vui lòng điền đầy đủ thông tin!");
     }

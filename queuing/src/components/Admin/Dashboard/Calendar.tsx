@@ -11,7 +11,7 @@ export const RCalendar = () => {
   };
   return (
     <div className="calendar">
-      <Calendar onChange={onChange} value={date} />
+      <Calendar onChange={onChange} value={date} locale="en-US" />
     </div>
   );
 };

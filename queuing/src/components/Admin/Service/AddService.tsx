@@ -111,14 +111,14 @@ export const AddService = () => {
         surNumS: surNumService ?? null,
         resetS: resetService ?? null,
       });
-      navigate("/service/list_service");
+      navigate("/list_service");
     } else {
-      message.error("Vui lòng điền đầy đủ thông tin!");
+      message.error("Please complete all information!");
     }
   };
 
   const validateMessages = {
-    required: "${label} cần được nhập!",
+    required: "${label} need to be entered!",
   };
 
   return (
@@ -127,9 +127,9 @@ export const AddService = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="AD_title">Quản lý dịch vụ</span>
+          <span className="AD_title">Service management</span>
           <div className="AD_box">
-            <span className="AD_box_title">Thông tin dịch vụ</span>
+            <span className="AD_box_title">Information Services</span>
             <Form
               className="AD_form"
               {...layout}
@@ -142,7 +142,7 @@ export const AddService = () => {
                 <Col className="D_col1" span={12}>
                   <Form.Item
                     name={["id"]}
-                    label="Mã dịch vụ"
+                    label="Service code"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -150,12 +150,12 @@ export const AddService = () => {
                       onChange={(e: any) => {
                         setIdService(e.target.value);
                       }}
-                      placeholder="Nhập mã dịch vụ"
+                      placeholder="Enter service code"
                     />
                   </Form.Item>
                   <Form.Item
                     name={["nameS"]}
-                    label="Tên dịch vụ"
+                    label="Service name"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -163,14 +163,14 @@ export const AddService = () => {
                       onChange={(e: any) => {
                         setNameService(e.target.value);
                       }}
-                      placeholder="Nhập tên dịch vụ"
+                      placeholder="Enter service name"
                     />
                   </Form.Item>
                 </Col>
                 <Col className="D_col2" span={12}>
                   <Form.Item
                     name={["desS"]}
-                    label="Mô tả"
+                    label="Description"
                     rules={[{ required: true }]}
                   >
                     <Input.TextArea
@@ -179,12 +179,12 @@ export const AddService = () => {
                       onChange={(e: any) => {
                         setDesService(e.target.value);
                       }}
-                      placeholder="Mô tả dịch vụ"
+                      placeholder="Service description"
                     />
                   </Form.Item>
                 </Col>
               </Row>
-              <span className="S_box_title">Quy tắc cấp số</span>
+              <span className="S_box_title">Rules for getting tickets</span>
               <div style={{ marginTop: "12px" }} className="autoS">
                 <Checkbox
                   checked={autoService || false}
@@ -192,7 +192,7 @@ export const AddService = () => {
                     setAutoService(e.target.checked);
                   }}
                 >
-                  <span>Tăng tự động từ:</span>
+                  <span>Auto increment from</span>
                   <InputNumber
                     className="numS"
                     min={1}
@@ -202,7 +202,7 @@ export const AddService = () => {
                     formatter={formatNumber}
                   />
                   <span style={{ position: "absolute", marginLeft: "106px" }}>
-                    đến
+                    to
                   </span>
                   <InputNumber
                     className="numS2"
@@ -258,14 +258,14 @@ export const AddService = () => {
                       setResetService(e.target.checked);
                     }}
                   >
-                    <span>Reset mỗi ngày</span>
+                    <span>Reset every day</span>
                   </Checkbox>
                 </div>
               </div>
               <div style={{ marginTop: "14px" }} className="AD_note">
                 <StartIcon />
                 <span className="AD_note_text">
-                  Là trường thông tin bắt buộc
+                This is a required field
                 </span>
               </div>
               <Form.Item style={{ marginTop: "34px" }} className="D_bottom">
@@ -274,7 +274,7 @@ export const AddService = () => {
                   type="primary"
                   onClick={() => navigate(-1)}
                 >
-                  Hủy bỏ
+                  Cancel
                 </Button>
                 <Button
                   onClick={onSubmitBtn}
@@ -282,7 +282,7 @@ export const AddService = () => {
                   type="primary"
                   htmlType="submit"
                 >
-                  Thêm dịch vụ
+                  Add service
                 </Button>
               </Form.Item>
             </Form>

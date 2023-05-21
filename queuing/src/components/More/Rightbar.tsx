@@ -6,6 +6,14 @@ import { CRbar } from "./CRbar";
 import { RCalendar } from "../Admin/Dashboard/Calendar";
 import { Link } from "react-router-dom";
 import "./Rightbar.css";
+import { collection, getDocs } from "firebase/firestore/lite";
+import { useEffect, useState } from "react";
+import { db } from "../../Server/firebase";
+
+interface Number {
+  id: string;
+  sttN: string;
+}
 
 const DeviceSVG = () => (
   <svg
@@ -162,11 +170,69 @@ const NumberIcon = (props: Partial<CustomIconComponentProps>) => (
   <Icon component={NumberSVG} {...props} />
 );
 
+interface Device {
+  id: string;
+  stt: boolean;
+}
+
+interface Service {
+  id: string;
+}
+
 export const Rightbar = () => {
+  const [device, setDevice] = useState<Device[]>([]);
+  const [service, setService] = useState<Service[]>([]);
+  const [number, setNumber] = useState<Number[]>([]);
+
+  const sttN1 = number.filter((item) => item.sttN === "Done").length;
+  const sttN2 = number.filter((item) => item.sttN === "Waiting").length;
+  const sttN3 = number.filter((item) => item.sttN === "Skip").length;
+
+  const total = sttN1 + sttN2 + sttN3;
+  const percent1 = (sttN1 / total) * 100;
+  const percent2 = (sttN2 / total) * 100;
+  const percent3 = (sttN3 / total) * 100;
+
+  async function getCities(db: any) {
+    const citiesCol = collection(db, "device");
+    const citySnapshot = await getDocs(citiesCol);
+    const cityList = citySnapshot.docs.map((doc) => ({
+      ...(doc.data() as Device),
+      id: doc.id,
+    }));
+    setDevice(cityList);
+  }
+
+  async function getUsers(db: any) {
+    const citiesCol = collection(db, "service");
+    const citySnapshot = await getDocs(citiesCol);
+    const cityList = citySnapshot.docs.map((doc) => ({
+      ...(doc.data() as Service),
+      id: doc.id,
+    }));
+    setService(cityList);
+  }
+
+  async function getNumbers(db: any) {
+    const citiesCol = collection(db, "number");
+    const citySnapshot = await getDocs(citiesCol);
+    const cityList = citySnapshot.docs.map((doc) => ({
+      ...(doc.data() as Number),
+      id: doc.id,
+    }));
+    setNumber(cityList);
+  }
+
+  useEffect(() => {
+    getCities(db);
+    getUsers(db);
+    getNumbers(db);
+  }, []);
+
   return (
     <div className="Rightbar">
       <CRbar />
-      <p className="Rbar_text">Tổng quan</p>
+      <p className="Rbar_text">Overview</p>
       <Link to="/device/list_device">
         <Row className="stt">
           <Col span={5}>
@@ -186,19 +252,19 @@ export const Rightbar = () => {
             </div>
           </Col>
           <Col span={6}>
-            <span className="span1">4221</span>
+            <span className="span1">{device?.length} </span>
             <span className="span2">
-              <DeviceIcon /> <span style={{ color: "#ff7506" }}>Thiết bị</span>
+              <DeviceIcon /> <span style={{ color: "#ff7506" }}>Device</span>
             </span>
           </Col>
           <Col span={13}>
             <ul>
               <li className="li_1">
-                Đang hoạt động
+                Active
                 <span className="li_num">3.799</span>
               </li>
               <li className="li_2">
-                Ngưng hoạt động
+                Shut down
                 <span className="li_num">422</span>
               </li>
             </ul>
@@ -224,20 +290,20 @@ export const Rightbar = () => {
             </div>
           </Col>
           <Col span={6}>
-            <span className="span1">276</span>
+            <span className="span1">{service?.length}</span>
             <span className="span2">
               <ServiceIcon />
-              <span style={{ color: "#4277FF" }}> Dịch vụ</span>
+              <span style={{ color: "#4277FF" }}>Service</span>
             </span>
           </Col>
           <Col span={13}>
             <ul>
               <li className="li_3">
-                Đang hoạt động
+                Active
                 <span className="li_num">210</span>
               </li>
               <li className="li_4">
-                Ngưng hoạt động
+                Shut down
                 <span className="li_num">66</span>
               </li>
             </ul>
@@ -251,43 +317,43 @@ export const Rightbar = () => {
               <Progress
                 className="circle1"
                 type="circle"
-                percent={86}
+                percent={+percent1.toFixed(0)}
                 strokeColor={{ "100%": "#35C75A" }}
               />
               <Progress
                 className="circle2"
                 type="circle"
-                percent={9}
+                percent={percent2}
                 strokeColor={{ "100%": "#7E7D88" }}
               />
               <Progress
                 className="circle3"
                 type="circle"
-                percent={5}
+                percent={percent3}
                 strokeColor={{ "100%": "#7E7D88" }}
               />
             </div>
           </Col>
           <Col span={6}>
-            <span className="span1">4221</span>
+            <span className="span1">{number?.length}</span>
             <span className="span2">
               <NumberIcon />
-              <span style={{ color: "#35C75A" }}> Cấp số</span>
+              <span style={{ color: "#35C75A" }}>Tickets</span>
             </span>
           </Col>
           <Col span={13}>
             <ul style={{ marginTop: "0px" }}>
               <li className="li_5">
-                Đang chờ
-                <span className="li_num_3">3.721</span>
+                Waiting
+                <span className="li_num_3">{sttN2}</span>
               </li>
               <li className="li_7">
-                Đã sử dụng
-                <span className="li_num_3">486</span>
+                Done
+                <span className="li_num_3">{sttN1}</span>
               </li>
               <li className="li_6">
-                Bỏ qua
-                <span className="li_num_3">32</span>
+                Skip
+                <span className="li_num_3">{sttN3}</span>
               </li>
             </ul>
           </Col>

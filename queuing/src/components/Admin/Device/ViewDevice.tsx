@@ -77,44 +77,41 @@ export const ViewDevice = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="V_title"> Quản lý thiết bị</span>
+          <span className="V_title"> Equipment management</span>
           <div className="V_table">
-            <span className="V_table_title">Thông tin thiết bị</span>
+            <span className="V_table_title">Device Information</span>
             <Row>
               <Col className="V_col1" span={12}>
                 <span>
-                  Mã thiết bị: <span>{idD}</span>
+                  Device code: <span>{idD}</span>
                 </span>
                 <span>
-                  Tên thiết bị: <span>{name}</span>
+                  Device name: <span>{name}</span>
                 </span>
                 <span>
-                  Địa chỉ IP: <span>{ip}</span>
+                  IP address: <span>{ip}</span>
                 </span>
               </Col>
               <Col className="V_col2" span={12}>
                 <span>
-                  Loại thiết bị: <span>{type}</span>
+                  Type of device: <span>{type}</span>
                 </span>
                 <span>
-                  Tên đăng nhập: <span>{username}</span>
+                  Username: <span>{username}</span>
                 </span>
                 <span>
-                  Mật khẩu: <span>{password}</span>
+                  Password: <span>{password}</span>
                 </span>
               </Col>
               <span className="V_col_center">
-                Dịch vụ sử dụng:<span>{service.join(", ")}</span>
+                Service used:<span>{service.join(", ")}</span>
               </span>
             </Row>
           </div>
           <section className="section_content">
-            <Link
-              to={`/device/list_device/edit_device/${id}`}
-              className="V_add"
-            >
+            <Link to={`/list_device/edit_device/${id}`} className="V_add">
               <UpdIcon />
-              <span>Cập nhật thiết bị</span>
+              <span>Device update</span>
             </Link>
           </section>
         </Content>

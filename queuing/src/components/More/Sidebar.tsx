@@ -290,23 +290,23 @@ const SidebarData = [
     icon: <DashboardIcon />,
   },
   {
-    title: "Thiết bị",
-    path: "/device/list_device",
+    title: "Device",
+    path: "/list_device",
     icon: <DeviceIcon />,
   },
   {
-    title: "Dịch vụ",
-    path: "/service/list_service",
+    title: "Service",
+    path: "/list_Service",
     icon: <ServiceIcon />,
   },
   {
-    title: "Cấp số",
-    path: "/number/list_number",
+    title: "Tickets",
+    path: "/list_Number",
     icon: <NumberIcon />,
   },
   {
-    title: "Báo cáo",
-    path: "/report/list_report",
+    title: "Report",
+    path: "/list_Report",
     icon: (
       <img
         src="../../../Img/ReportSVG.png"
@@ -316,14 +316,14 @@ const SidebarData = [
     ),
   },
   {
-    title: "Cài đặt hệ thống",
+    title: "Setting",
     path: "/setting",
     icon: <SettingIcon />,
   },
 ];
 const LogoutData = [
   {
-    title: "Đăng xuất",
+    title: "Log out",
     path: "/",
     icon: <LogoutIcon />,
   },
@@ -333,18 +333,18 @@ export const Sidebar = () => {
   const subMenu = (
     <Menu className="SB_menu">
       <Menu.Item>
-        <NavLink className="SB_menu_link" to="/setting/manage_role">
-          Quản lý vai trò
+        <NavLink className="SB_menu_link" to="/manage_Role">
+          Role management
         </NavLink>
       </Menu.Item>
       <Menu.Item>
-        <NavLink className="SB_menu_link" to="/setting/manage_account">
-          Quản lý tài khoản
+        <NavLink className="SB_menu_link" to="/manage_Account">
+          Account Management
         </NavLink>
       </Menu.Item>
       <Menu.Item>
-        <NavLink className="SB_menu_link" to="/setting/manage_user">
-          Quản lý người dùng
+        <NavLink className="SB_menu_link" to="/manage_User">
+          user management
         </NavLink>
       </Menu.Item>
     </Menu>
@@ -360,7 +360,7 @@ export const Sidebar = () => {
           {SidebarData.map((item, index) => {
             return (
               <li key={index} className="SB_item">
-                {item.title === "Cài đặt hệ thống" ? (
+                {item.title === "Setting" ? (
                   <SubMenu
                     title={
                       <span className="SB_set_icon">

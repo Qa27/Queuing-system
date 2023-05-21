@@ -89,7 +89,7 @@ export const AddRole = () => {
         nameR: nameR,
         descriptionR: descriptionR,
       });
-      navigate("/setting/manage_role");
+      navigate("/manage_role");
     } else {
       message.error("Vui lòng điền đầy đủ thông tin!");
     }

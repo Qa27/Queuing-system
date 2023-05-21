@@ -16,12 +16,12 @@ import { Content } from "antd/es/layout/layout";
 const { Option } = Select;
 
 const OPTIONS = [
-  "Khám tim mạch",
-  "Khám sản - Phụ khoa",
-  "Khám răng hàm mặt",
-  "Khám tai mũi họng",
-  "Khám hô hấp",
-  "Khám tổng quát",
+  "Cardiovascular examination",
+  "Obstetrics - Gynecological examination",
+  "Dental checkup",
+  "Ear, nose and throat examination",
+  "Respiratory examination",
+  "General examination",
 ];
 
 const StartSVG = () => (
@@ -83,14 +83,14 @@ export const AddDevice = () => {
         password: passDevice,
         service: serviceDevice,
       });
-      navigate("/device/list_device");
+      navigate("/list_device");
     } else {
-      message.error("Vui lòng điền đầy đủ thông tin!");
+      message.error("Please complete all information!");
     }
   };
 
   const validateMessages = {
-    required: "${label} cần được nhập!",
+    required: "${label} need to be entered!",
   };
 
   const createCustomSuffixIcon = (openState: boolean[]) => (
@@ -133,9 +133,9 @@ export const AddDevice = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="AD_title">Quản lý thiết bị</span>
+          <span className="AD_title">Equipment management</span>
           <div className="AD_box">
-            <span className="AD_box_title">Thông tin thiết bị</span>
+            <span className="AD_box_title">Device Information</span>
             <Form
               className="AD_form"
               {...layout}
@@ -148,7 +148,7 @@ export const AddDevice = () => {
                 <Col className="D_col1" span={12}>
                   <Form.Item
                     name={["id"]}
-                    label="Mã thiết bị"
+                    label="Device code"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -156,12 +156,12 @@ export const AddDevice = () => {
                       onChange={(e: any) => {
                         setIdDevice(e.target.value);
                       }}
-                      placeholder="Nhập mã thiết bị"
+                      placeholder="Enter device code"
                     />
                   </Form.Item>
                   <Form.Item
                     name={["name"]}
-                    label="Tên thiết bị"
+                    label="Device name"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -169,12 +169,12 @@ export const AddDevice = () => {
                       onChange={(e: any) => {
                         setNameDevice(e.target.value);
                       }}
-                      placeholder="Nhập tên thiết bị"
+                      placeholder="Enter the device name"
                     />
                   </Form.Item>
                   <Form.Item
                     name={["IP"]}
-                    label="Địa chỉ IP"
+                    label="IP address"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -182,14 +182,14 @@ export const AddDevice = () => {
                       onChange={(e: any) => {
                         setIPDevice(e.target.value);
                       }}
-                      placeholder="Nhập địa chỉ IP"
+                      placeholder="Enter IP address"
                     />
                   </Form.Item>
                 </Col>
                 <Col className="D_col2" span={12}>
                   <Form.Item
                     name={["type"]}
-                    label="Loại thiết bị"
+                    label="Type of device"
                     rules={[{ required: true }]}
                   >
                     <Select
@@ -202,7 +202,7 @@ export const AddDevice = () => {
                         setTypeDevice(value);
                       }}
                       className="DD_device"
-                      placeholder="Chọn loại thiết bị"
+                      placeholder="Select device type"
                       allowClear
                     >
                       <Option value="Kiosk">Kiosk</Option>
@@ -211,7 +211,7 @@ export const AddDevice = () => {
                   </Form.Item>
                   <Form.Item
                     name={["username"]}
-                    label="Tên đăng nhập"
+                    label="Username"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -219,12 +219,12 @@ export const AddDevice = () => {
                       onChange={(e: any) => {
                         setUserDevice(e.target.value);
                       }}
-                      placeholder="Nhập tài khoản"
+                      placeholder="Enter account"
                     />
                   </Form.Item>
                   <Form.Item
                     name={["password"]}
-                    label="Mật khẩu"
+                    label="Password"
                     rules={[{ required: true }]}
                   >
                     <Input
@@ -232,7 +232,7 @@ export const AddDevice = () => {
                       onChange={(e: any) => {
                         setPassDevice(e.target.value);
                       }}
-                      placeholder="Nhập mật khẩu"
+                      placeholder="Enter password"
                     />
                   </Form.Item>
                 </Col>
@@ -240,12 +240,12 @@ export const AddDevice = () => {
               <Form.Item
                 className="AD_form_center"
                 name={["tag"]}
-                label="Dịch vụ thiết bị"
+                label="Equipment service"
                 rules={[{ required: true }]}
               >
                 <Select
                   mode="multiple"
-                  placeholder="Nhập dịch vụ thiết bị"
+                  placeholder="Enter device service"
                   value={serviceDevice}
                   onChange={handleChange}
                   options={filteredOptions.map((item) => ({
@@ -256,9 +256,7 @@ export const AddDevice = () => {
               </Form.Item>
               <div className="AD_note">
                 <StartIcon />
-                <span className="AD_note_text">
-                  Là trường thông tin bắt buộc
-                </span>
+                <span className="AD_note_text">This is a required field</span>
               </div>
               <Form.Item className="D_bottom">
                 <Button
@@ -266,7 +264,7 @@ export const AddDevice = () => {
                   type="primary"
                   onClick={() => navigate(-1)}
                 >
-                  Hủy bỏ
+                  Cancel
                 </Button>
                 <Button
                   onClick={onSubmitBtn}
@@ -274,7 +272,7 @@ export const AddDevice = () => {
                   type="primary"
                   htmlType="submit"
                 >
-                  Thêm thiết bị
+                  Add device
                 </Button>
               </Form.Item>
             </Form>

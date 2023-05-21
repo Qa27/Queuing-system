@@ -1,16 +1,13 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-template-curly-in-string */
 import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
 import { Button, Form, Input, Layout } from "antd";
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Login.css";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Server/firebase";
-import GoogleButton from "react-google-button";
-import { UserAuth } from "./AuthContext";
 
 const WarningSVG = () => (
   <svg
@@ -67,51 +64,28 @@ const validateMessages = {
   },
 };
 
-export const Login = () => {
+export const Register = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
   const [emailL, setEmailL] = useState("");
   const [passL, setPassL] = useState("");
-  const { googleSignIn, user } = UserAuth();
-
-  const handleClickGG = async () => {
-    try {
-      await googleSignIn();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const onSubmitBtn = (e: any) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, emailL, passL)
+    createUserWithEmailAndPassword(auth, emailL, passL)
       .then((userCredential) => {
-        navigate("/user_number");
+        navigate("/");
       })
       .catch((error) => {
         setError(true);
-        setErrorMessage("Wrong password or email");
-        setTimeout(() => {
-          setError(false);
-          setErrorMessage("");
-        }, 3000);
       });
   };
-
-  useEffect(() => {
-    if (user != null) {
-      navigate("/dashboard");
-    } else {
-      navigate("/");
-    }
-  }, [user]);
 
   return (
     <div>
       <Layout className="login_box">
         <div>
-          <img src="Img/Logo.png" className="login_logo" alt=""></img>
+          <img src="../Img/Logo.png" className="login_logo" alt=""></img>
         </div>
         <Form
           className="login_form"
@@ -147,30 +121,24 @@ export const Login = () => {
           {error && (
             <span className="login_error">
               <WarningIcon />
-              <span className="login_error_title">{errorMessage}</span>
+              <span className="login_error_title">Wrong password or email</span>
             </span>
           )}
-          <div className="links_container">
-            <Form.Item>
-              <GoogleButton onClick={handleClickGG} className="login_gg" />
-            </Form.Item>
-            <Link to="/login/create_account" className="login_create">
-              Register an account
-            </Link>
-          </div>
+          <Form.Item>
+          </Form.Item>
           <Form.Item>
             <Button
               onClick={onSubmitBtn}
-              className="login_submit"
+              className="login_submit re_submit"
               type="primary"
               htmlType="submit"
             >
-              Log in
+              Register
             </Button>
           </Form.Item>
         </Form>
         <div className="login_right">
-          <img src="Img/loginImg.jpg" alt="" className="login_img" />
+          <img src="../Img/loginImg.jpg" alt="" className="login_img" />
           <span className="login_title1">System</span>
           <span className="login_title2">TICKET MANAGEMENT</span>
         </div>

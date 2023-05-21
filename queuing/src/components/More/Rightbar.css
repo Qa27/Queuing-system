@@ -109,7 +109,7 @@
 }
 
 .li_num {
-  margin-left: 15px;
+  margin-left: 30px;
   font-weight: 700;
   font-size: 14px;
   line-height: 18px;
@@ -118,7 +118,7 @@
 
 .li_2 span,
 .li_4 .li_num {
-  margin-left: 7px;
+  margin-left: 10px;
 }
 
 .li_3 .li_num,
@@ -127,7 +127,7 @@
 }
 
 .li_num_3 {
-  margin-left: 47px;
+  margin-left: 24px;
   font-weight: 700;
   font-size: 14px;
   line-height: 18px;
@@ -135,8 +135,8 @@
 }
 
 .li_7 .li_num_3{
-  margin-left: 37px;
+  margin-left: 36px;
 }
 .li_6 .li_num_3{
-  margin-left: 61px;
+  margin-left: 40px;
 }

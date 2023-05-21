@@ -1,4 +1,3 @@
-import React from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import { Dashboard } from "./components/Admin/Dashboard/Dashboard";
@@ -23,59 +22,191 @@ import { AddAcc } from "./components/Admin/Setting/AddAcc";
 import { EditAcc } from "./components/Admin/Setting/EditAcc";
 import { MUsers } from "./components/Admin/Setting/MUsers";
 import { Login } from "./components/Login/Login";
-import { LoginForget } from "./components/Login/LoginForget";
-import { NewPass } from "./components/Login/NewPass";
+import { Register } from "./components/Login/Register";
+import { AuthContextProvider } from "./components/Login/AuthContext";
+import Protected from "./components/Login/Protected";
+import { User } from "./components/User/User";
+import { UserNumber } from "./components/User/UserNumber";
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route index element={<Login />} />
-        <Route path="/login/forget" element={<LoginForget />}></Route>
-        <Route path="/login/NewPassword" element={<NewPass />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
-        <Route path="/infor" element={<Infor />} />
-        <Route path="/device/list_device" element={<Devices />} />
-        <Route path="/device/list_device/add_device" element={<AddDevice />} />
-        <Route
-          path="/device/list_device/edit_device/:id"
-          element={<EditDevice />}
-        />
-        <Route path="/device/list_device/view/:id" element={<ViewDevice />} />
-        <Route path="/service/list_service" element={<Services />} />
-        <Route
-          path="/service/list_service/add_service"
-          element={<AddService />}
-        />
-        <Route
-          path="/service/list_service/view/:id"
-          element={<ViewService />}
-        />
-        <Route
-          path="/service/list_service/edit_service/:id"
-          element={<EditService />}
-        />
-        <Route path="/number/list_number" element={<Numbers />} />
-        <Route path="/number/list_number/add_number" element={<AddNumber />} />
-        <Route path="/number/list_number/view/:id" element={<ViewNumber />} />
-        <Route path="/report/list_report" element={<Reports />} />
-        <Route path="/setting/manage_role" element={<MRoles />} />
-        <Route path="/setting/manage_role/add_role" element={<AddRole />} />
-        <Route
-          path="/setting/manage_role/edit_role/:id"
-          element={<EditRole />}
-        />
-        <Route path="/setting/manage_account" element={<MAcc />} />
-        <Route
-          path="/setting/manage_account/add_account"
-          element={<AddAcc />}
-        />
-        <Route
-          path="/setting/manage_account/edit_account/:id"
-          element={<EditAcc />}
-        />
-        <Route path="/setting/manage_user" element={<MUsers />} />
-      </Routes>
+      <AuthContextProvider>
+        <Routes>
+          <Route index element={<Login />} />
+          <Route path="/login/create_account" element={<Register />}></Route>
+          <Route
+            path="/dashboard"
+            element={
+              <Protected>
+                <Dashboard />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="/infor"
+            element={
+              <Protected>
+                <Infor />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_device"
+            element={
+              <Protected>
+                <Devices />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_device/add_device"
+            element={
+              <Protected>
+                <AddDevice />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_device/edit_device/:id"
+            element={
+              <Protected>
+                <EditDevice />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_device/:id"
+            element={
+              <Protected>
+                <ViewDevice />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_service"
+            element={
+              <Protected>
+                <Services />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_service/add_service"
+            element={
+              <Protected>
+                <AddService />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_service/:id"
+            element={
+              <Protected>
+                <ViewService />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_service/edit_service/:id"
+            element={
+              <Protected>
+                <EditService />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_number"
+            element={
+              <Protected>
+                <Numbers />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_number/add_number"
+            element={
+              <Protected>
+                <AddNumber />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_number/:id"
+            element={
+              <Protected>
+                <ViewNumber />
+              </Protected>
+            }
+          />
+          <Route
+            path="/list_report"
+            element={
+              <Protected>
+                <Reports />
+              </Protected>
+            }
+          />
+          <Route
+            path="/manage_role"
+            element={
+              <Protected>
+                <MRoles />
+              </Protected>
+            }
+          />
+          <Route
+            path="/manage_role/add_role"
+            element={
+              <Protected>
+                <AddRole />
+              </Protected>
+            }
+          />
+          <Route
+            path="/manage_role/:id"
+            element={
+              <Protected>
+                <EditRole />
+              </Protected>
+            }
+          />
+          <Route
+            path="/manage_account"
+            element={
+              <Protected>
+                <MAcc />
+              </Protected>
+            }
+          />
+          <Route
+            path="/manage_account/add_account"
+            element={
+              <Protected>
+                <AddAcc />
+              </Protected>
+            }
+          />
+          <Route
+            path="/manage_account/:id"
+            element={
+              <Protected>
+                <EditAcc />
+              </Protected>
+            }
+          />
+          <Route
+            path="/manage_user"
+            element={
+              <Protected>
+                <MUsers />
+              </Protected>
+            }
+          />
+          <Route path="/user" element={<User />} />
+          <Route path="/user_number" element={<UserNumber />} />
+        </Routes>
+      </AuthContextProvider>
     </div>
   );
 }

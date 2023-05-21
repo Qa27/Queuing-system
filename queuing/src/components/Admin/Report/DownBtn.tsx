@@ -40,15 +40,15 @@ interface ButtonDownloadProps {
 
 export const DownBtn = ({ columns, data }: ButtonDownloadProps) => {
   const handleDownload = () => {
-    // Tạo một đối tượng Workbook mới
+    // Create a new Workbook object
     const workbook = XLSX.utils.book_new();
 
-    // Tạo một Worksheet mới và thêm dữ liệu vào đó
+    // Create a new Worksheet and add data to it
     const columnNames = columns.map((column) => column.dataIndex);
     const worksheet = XLSX.utils.json_to_sheet(data, { header: columnNames });
     XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-    // Xuất file Excel
+    // Export Excel file
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
       type: "array",
@@ -62,7 +62,7 @@ export const DownBtn = ({ columns, data }: ButtonDownloadProps) => {
   return (
     <Button className="R_add" type="primary" onClick={handleDownload}>
       <DownExcelIcon />
-      Tải về
+      Download
     </Button>
   );
 };

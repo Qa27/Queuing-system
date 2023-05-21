@@ -9,7 +9,7 @@
 
 .N_dropdown .ant-select-selector {
   align-items: center;
-  width: 154px !important;
+  width: 250px !important;
   height: 44px !important;
 }
 
@@ -21,17 +21,13 @@
 }
 
 .N_box2 {
-  margin-left: 176px;
-}
-
-.N_box3 {
-  margin-left: 351px;
+  margin-left: 284px;
 }
 
 .N_box4 {
-  margin-left: 172px;
+  margin-left: 568px;
 }
 
 .N_box5 {
-  margin-left: 549px;
+  margin-left: 900px;
 }

@@ -1,7 +1,7 @@
 import Icon, {
   CustomIconComponentProps,
 } from "@ant-design/icons/lib/components/Icon";
-import { Badge, Button, Col, Layout, Row } from "antd";
+import { Button, Col, Layout, Row } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { doc, getDoc, Timestamp } from "firebase/firestore/lite";
 import React, { useState } from "react";
@@ -14,10 +14,9 @@ import { Sidebar } from "../../More/Sidebar";
 interface Number {
   id: string;
   numN: number;
-  nameUser: string;
   nameN: string;
   timeN: Timestamp;
-  expiryN: Timestamp;
+  timeSlotN: string;
   sttN: string;
   sourceN: string;
 }
@@ -48,37 +47,18 @@ const BackIcon = (props: Partial<CustomIconComponentProps>) => (
 export const ViewNumber = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [numN, setNumN] = useState<number | null>(1);
-  const [nameUser, setNameUser] = useState("");
   const [nameN, setNameN] = useState("");
   const [timeN, setTimeN] = useState("");
-  const [expiryN, setExpiryN] = useState("");
-  const [sttN, setSttN] = useState("");
-  const [sourceN, setSourceN] = useState("");
+  const [timeSlotN, settimeSlotN] = useState("");
 
   const decRef = id ? doc(db, "number", id) : null;
   const getd = async () => {
     if (decRef) {
       const deviceSnapshot = await getDoc(decRef);
-      const { numN, nameUser, nameN, timeN, expiryN, sttN, sourceN } =
-        deviceSnapshot.data() as Number;
-      setNumN(numN);
-      setNameUser(nameUser);
+      const { nameN, timeN, timeSlotN } = deviceSnapshot.data() as Number;
       setNameN(nameN);
-      setTimeN(
-        timeN
-          .toDate()
-          .toLocaleString("vi-VN", { hour12: false })
-          .replace(/:\d{2}\s/, " - ")
-      );
-      setExpiryN(
-        expiryN
-          .toDate()
-          .toLocaleString("vi-VN", { hour12: false })
-          .replace(/:\d{2}\s/, " - ")
-      );
-      setSttN(sttN);
-      setSourceN(sourceN);
+      setTimeN(timeN.toDate?.().toLocaleDateString());
+      settimeSlotN(timeSlotN);
     }
   };
   getd();
@@ -89,55 +69,20 @@ export const ViewNumber = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="V_title"> Quản lý cấp số</span>
+          <span className="V_title">Manage tickets</span>
           <div className="V_table">
-            <span className="V_table_title">Thông tin cấp số</span>
+            <span className="V_table_title">Ticket information</span>
             <Row>
               <Col className="V_col1" span={12}>
                 <span>
-                  Họ tên: <span>{nameUser}</span>
+                  Service name: <span>{nameN}</span>
+                </span>
+
+                <span>
+                  Set date: <span>{timeN}</span>
                 </span>
                 <span>
-                  Tên dịch vụ <span>{nameN}</span>
-                </span>
-                <span>
-                  Số thứ tự: <span>{numN}</span>
-                </span>
-                <span>
-                  Thời gian cấp: <span>{timeN}</span>
-                </span>
-                <span>
-                  Hạn sử dụng: <span>{expiryN}</span>
-                </span>
-              </Col>
-              <Col className="V_col2" span={12}>
-                <span>
-                  Nguồn cấp: <span>{sourceN}</span>
-                </span>
-                <span>
-                  Trạng thái:
-                  <Badge
-                    style={{
-                      marginTop: "-13px",
-                      color: "#535261",
-                      fontWeight: "400",
-                    }}
-                    className="V_stt"
-                    status={
-                      sttN === "Đang chờ"
-                        ? "processing"
-                        : sttN === "Đã sử dụng"
-                        ? "default"
-                        : "error"
-                    }
-                    text={sttN}
-                  />
-                </span>
-                <span>
-                  Số điện thoại: <span>0000</span>
-                </span>
-                <span>
-                  Địa chỉ email: <span>@gmail.com</span>
+                  Set time: <span>{timeSlotN}</span>
                 </span>
               </Col>
             </Row>
@@ -149,7 +94,7 @@ export const ViewNumber = () => {
               onClick={() => navigate(-1)}
             >
               <BackIcon />
-              <span> Quay lại</span>
+              <span>Back</span>
             </Button>
           </section>
         </Content>

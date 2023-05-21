@@ -112,7 +112,8 @@
 
 .SB_set_text svg {
   position: absolute;
-  margin-top: -18px;
+  margin-top: -17px;
+  margin-left: 60px;
 }
 
 .SB_menu {
@@ -129,7 +130,6 @@
 }
 
 .SB_menu .active {
-  /* background-color: #fff2e7 !important; */
   color: #ff7506 !important;
 }
 

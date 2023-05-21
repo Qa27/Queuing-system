@@ -1,19 +1,16 @@
-import { Button, DatePicker, Layout, Modal, Select } from "antd";
 import { Content } from "antd/es/layout/layout";
-import { Timestamp, addDoc, collection } from "firebase/firestore/lite";
-import React, { useState } from "react";
+import { UserSidebar } from "./UserSidebar";
+import { Button, DatePicker, Layout, Modal, Select } from "antd";
 import { useNavigate } from "react-router-dom";
-import { db } from "../../../Server/firebase";
-import { CRbar } from "../../More/CRbar";
-import { RBreadcrumb } from "../../More/RBreadcrumb";
-import { Sidebar } from "../../More/Sidebar";
-import "./AddNumber.css";
-import moment from "moment";
+import { useState } from "react";
 import { Dayjs } from "dayjs";
+import { Timestamp, addDoc, collection } from "firebase/firestore/lite";
+import { db } from "../../Server/firebase";
+import moment from "moment";
 
 const { Option } = Select;
 
-export const AddNumber = () => {
+export const UserNumber = () => {
   const navigate = useNavigate();
   const [openSTT, setOpenSTT] = useState<boolean[]>([]);
   const [open, setOpen] = useState(false);
@@ -39,7 +36,7 @@ export const AddNumber = () => {
         createdAt: Timestamp.now(),
         sttN: sttNValue,
       });
-      navigate("/list_number");
+      navigate("/user_number");
     }
   };
 
@@ -106,10 +103,9 @@ export const AddNumber = () => {
   return (
     <div>
       <Layout>
-        <Sidebar />
-        <RBreadcrumb />
+        <UserSidebar />
         <Content>
-          <span className="AD_title">Manage tickets</span>
+          <span className="AD_title">Ticket management</span>
           <div className="AN_box">
             <span className="AN_box_title">TAKE A NEW TICKET</span>
             <span className="AN_box_text">Customer service of choice</span>
@@ -156,7 +152,6 @@ export const AddNumber = () => {
                 Get a ticket
               </Button>
               <Modal
-                className="AN_btn_on"
                 open={showDatePicker || open}
                 onCancel={() => {
                   if (showDatePicker) {
@@ -198,7 +193,6 @@ export const AddNumber = () => {
             </div>
           </div>
         </Content>
-        <CRbar />
       </Layout>
     </div>
   );

@@ -43,15 +43,18 @@ export const Infor: React.FC = () => {
       <CameraOutlined />
     </div>
   );
+
   return (
     <div>
       <Layout>
         <Sidebar />
         <div className="infor">
-          <span>Thông tin cá nhân</span>
+          <span>Personal information</span>
           <div className="box_infor">
             <div className="box_img">
-              <div className="img_circle"></div>
+              <div className="img_circle">
+                <img src="Img/user.png" alt="" className="in_img"/>
+              </div>
               <Upload
                 action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-circle"
@@ -78,11 +81,11 @@ export const Infor: React.FC = () => {
             <div className="admin_infor">
               <div className="infor_admin">
                 <div className="infor_admin_box">
-                  <label>Tên người dùng</label>
+                  <label>Name</label>
                   <Input className="infor_admin_input" prefix="Qa" disabled />
                 </div>
                 <div className="infor_admin_box">
-                  <label>Số điện thoại</label>
+                  <label>Phone number</label>
                   <Input
                     className="infor_admin_input"
                     prefix="0123456789"
@@ -100,7 +103,7 @@ export const Infor: React.FC = () => {
               </div>
               <div className="infor_admin2">
                 <div className="infor_admin_box">
-                  <label>Tên đăng nhập</label>
+                  <label>Username</label>
                   <Input
                     className="infor_admin_input"
                     prefix="qaqa123"
@@ -108,7 +111,7 @@ export const Infor: React.FC = () => {
                   />
                 </div>
                 <div className="infor_admin_box">
-                  <label>Mật khẩu</label>
+                  <label>Password</label>
                   <Input
                     className="infor_admin_input"
                     prefix="123456"
@@ -116,7 +119,7 @@ export const Infor: React.FC = () => {
                   />
                 </div>
                 <div className="infor_admin_box">
-                  <label>Vai trò</label>
+                  <label>Role</label>
                   <Input
                     className="infor_admin_input"
                     prefix="Admin"

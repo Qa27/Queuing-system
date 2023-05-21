@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore/lite";
 import { db } from "../../../Server/firebase";
 import { Link } from "react-router-dom";
-import { Badge, Input, Layout, Pagination, Popover, Select, Table } from "antd";
+import { Input, Layout, Pagination, Popover, Table } from "antd";
 import { Sidebar } from "../../More/Sidebar";
 import { RBreadcrumb } from "../../More/RBreadcrumb";
 import "./Device.css";
@@ -13,16 +13,12 @@ import Icon, {
 import { CRbar } from "../../More/CRbar";
 import { Content } from "antd/es/layout/layout";
 
-const { Option } = Select;
-
 interface Device {
   id: string;
   idD: string;
   name: string;
   ip: string;
   service: string[];
-  stt: boolean;
-  connect: boolean;
 }
 
 const AddSVG = () => (
@@ -76,10 +72,6 @@ const SearchIcon = (props: Partial<CustomIconComponentProps>) => (
 export const Devices = () => {
   const [device, setDevice] = useState<Device[]>([]);
   const [open, setOpen] = useState<boolean[]>([]);
-  const [openSTT, setOpenSTT] = useState<boolean[]>([]);
-  const [openConnect, setOpenConnect] = useState<boolean[]>([]);
-  const [sttValue, setSttValue] = useState<string>("");
-  const [connectValue, setConnectValue] = useState<string>("");
   const [searchText, setSearchText] = useState("");
 
   async function getCities(db: any) {
@@ -103,44 +95,22 @@ export const Devices = () => {
 
   const columns = [
     {
-      title: "Mã thiết bị",
+      title: "Device code",
       dataIndex: "idD",
       key: "idD",
     },
     {
-      title: "Tên thiết bị",
+      title: "Device name",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Địa chỉ IP",
+      title: "IP address",
       dataIndex: "ip",
       key: "ip",
     },
     {
-      title: "Trạng thái hoạt động",
-      dataIndex: "stt",
-      key: "stt",
-      render: (stt: boolean) => (
-        <Badge
-          status={stt ? "success" : "error"}
-          text={stt ? "Hoạt động" : "Ngưng hoạt động"}
-        />
-      ),
-    },
-    {
-      title: "Trạng thái kết nối",
-      dataIndex: "connect",
-      key: "connect",
-      render: (connect: boolean) => (
-        <Badge
-          status={connect ? "success" : "error"}
-          text={connect ? "Kết nối" : "Mất kết nối"}
-        />
-      ),
-    },
-    {
-      title: "Dịch vụ sử dụng",
+      title: "Service used",
       dataIndex: "service",
       key: "service",
       height: 49,
@@ -169,7 +139,7 @@ export const Devices = () => {
                   onOpenChange={handleOpenChange(index)}
                 >
                   <a className="D_SV_btn" type="link">
-                    Xem thêm
+                    See more
                   </a>
                 </Popover>
               </>
@@ -185,23 +155,21 @@ export const Devices = () => {
       title: " ",
       dataIndex: "id",
       key: "id",
-      render: (id: any) => (
-        <Link to={`/device/list_device/view/${id}`}>Chi tiết</Link>
-      ),
+      render: (id: any) => <Link to={`/list_device/${id}`}>Detail</Link>,
     },
     {
       title: " ",
       dataIndex: "id",
       key: "id",
       render: (id: any) => (
-        <Link to={`/device/list_device/edit_device/${id}`}> Cập nhật </Link>
+        <Link to={`/list_device/edit_device/${id}`}> Update</Link>
       ),
     },
     // {
     //   title: " ",
     //   dataIndex: "id",
     //   key: "id",
-    //   render: (id: any) => <button onClick={() => onDelete(id)}>Xóa</button>,
+    //   render: (id: any) => <button onClick={() => onDelete(id)}>Delete</button>,
     // },
   ];
 
@@ -211,70 +179,6 @@ export const Devices = () => {
       newOpen[index] = visible;
       return newOpen;
     });
-  };
-
-  const createCustomSuffixIcon = (openState: boolean[]) => (
-    <svg
-      width="14"
-      height="8"
-      viewBox="0 0 14 8"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {openState.length === 0 ? (
-        <path
-          d="M1 1L7 7L13 1"
-          fill="#FF7506"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      ) : (
-        openState.map((isOpen) =>
-          isOpen ? (
-            <path
-              d="M13 7L7 0.999999L1 7 M13 7L7 0.999999L1 7L13 7Z"
-              fill="#FF7506"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          ) : (
-            <path d="M1 1L7 7L13 1" fill="#FF7506" />
-          )
-        )
-      )}
-    </svg>
-  );
-
-  const handleSttChange = (value: string) => {
-    setSttValue(value);
-    handleFilter(value, connectValue);
-  };
-
-  const handleConnectChange = (value: string) => {
-    setConnectValue(value);
-    handleFilter(sttValue, value);
-  };
-
-  const handleFilter = (sttValue: string, connectValue: string) => {
-    if (sttValue === "" && connectValue === "") {
-      getCities(db);
-    } else {
-      let filteredDevices = device;
-      if (sttValue !== "") {
-        filteredDevices = filteredDevices.filter(
-          (item) => item.stt === (sttValue === "true")
-        );
-      }
-      if (connectValue !== "") {
-        filteredDevices = filteredDevices.filter(
-          (item) => item.connect === (connectValue === "true")
-        );
-      }
-      setDevice(filteredDevices);
-    }
-    setCurrent(1);
   };
 
   const filteredData: Device[] = device.filter((item) =>
@@ -292,51 +196,17 @@ export const Devices = () => {
         <Sidebar />
         <RBreadcrumb />
         <Content>
-          <span className="title">Danh sách thiết bị</span>
+          <span className="title">List of devices</span>
           <div className="D_box">
-            <span className="D_box_title">Trạng thái hoạt động</span>
-            <div className="D_dropdown">
-              <Select
-                suffixIcon={createCustomSuffixIcon(openSTT)}
-                onDropdownVisibleChange={(openSTT: any) =>
-                  setOpenSTT([openSTT as boolean])
-                }
-                defaultValue=""
-                onChange={handleSttChange}
-              >
-                <Option value="">Tất cả</Option>
-                <Option value="true">Hoạt động</Option>
-                <Option value="false">Ngưng hoạt động</Option>
-              </Select>
-            </div>
-            <div className="D_box2">
-              <span className="D_box_title">Trạng thái kết nối</span>
-              <div className="D_dropdown">
-                <Select
-                  suffixIcon={createCustomSuffixIcon(openConnect)}
-                  onDropdownVisibleChange={(openConnect: any) =>
-                    setOpenConnect([openConnect as boolean])
-                  }
-                  defaultValue=""
-                  onChange={handleConnectChange}
-                >
-                  <Option value="">Tất cả</Option>
-                  <Option value="true">Kết nối</Option>
-                  <Option value="false">Mất kết nối</Option>
-                </Select>
-              </div>
-              <div className="D_box3">
-                <span className="D_box_title">Từ khóa</span>
-                <div className="D_search">
-                  <Input
-                    placeholder="Nhập từ khóa"
-                    onChange={(e: any) => {
-                      setSearchText(e.target.value);
-                    }}
-                    suffix={<SearchIcon />}
-                  />
-                </div>
-              </div>
+            <span className="D_box_title">Search</span>
+            <div className="D_search">
+              <Input
+                placeholder="Enter keywords"
+                onChange={(e: any) => {
+                  setSearchText(e.target.value);
+                }}
+                suffix={<SearchIcon />}
+              />
             </div>
           </div>
           <div className="D_table">
@@ -355,9 +225,9 @@ export const Devices = () => {
             />
           </div>
           <section className="section_content">
-            <Link to="/device/list_device/add_device" className="D_add">
+            <Link to="/list_device/add_device" className="D_add">
               <AddIcon />
-              <span>Thêm thiết bị</span>
+              <span>Add device</span>
             </Link>
           </section>
         </Content>
